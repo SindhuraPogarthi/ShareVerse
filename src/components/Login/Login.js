@@ -9,11 +9,12 @@ import sideimg from '../images/sideimage.png'
 export default function Login() {
   return (
     <div className={styles.mainpage}>
-
         <div className={styles.container}>
+            
             <div className={styles.myimages}>
             <img src={sideimg} alt='sideimg' className={styles.sideimage}></img>
             </div>
+
             <div className={styles.maincont}>
 
                 <div className={styles.logincont1}>
