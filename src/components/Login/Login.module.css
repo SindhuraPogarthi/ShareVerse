@@ -1,132 +1,98 @@
-.mainpage{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-}
+  @import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@400;700&display=swap');
 
 .container{
+    background-image: url("../images/bg.jpg");
+    height: 100vh;
+    width: 100%;
+    background-size: 100% 100%;
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Ysabeau Infant', sans-serif;
+    
+}
+.signinouter{
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    border-radius: 8px;
+    width: 318px;
+    height: 466px;
+    padding: 41px;
+    background-color: rgb(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+}
+.signinouter h1{
+    text-align: center;
+}
+.signinusername{
+    border: solid 1px rgb(168, 166, 166,0.5);
+    display: flex;
+    align-items: center;
+    height: 8%;
+    border-radius: 8px;
+    padding-left: 10px;
+    opacity: 0.8;
+    
+ 
+    
+}
+.signinusername input{
+    width: 90%;
+   background-color: transparent;
+   border: transparent;
+   font-weight: 400;
+   font-size: larger;
+   font-family: 'Ysabeau Infant', sans-serif;
+    
+}
+.signinusername ::placeholder{
+    color: white;
+}
+.signinpassword{
+    border: solid 1px rgb(168, 166, 166,0.5); 
+    display: flex;
+    align-items: center;
+    height: 8%;
+    border-radius: 8px;
+    padding-left: 10px;
+    opacity: 0.8;
+
+ 
+    
+}
+.signinpassword input{
+    width: 90%;
+   background-color: transparent;
+   border: transparent;
+   font-weight: 400;
+   font-size: larger;
+   font-family: 'Ysabeau Infant', sans-serif;
+}
+.signinpassword ::placeholder{
+    color: white;
+}
+.checkbox{
+    width: min-content;
+    
+}
+.signinouter .addtionalline span{
+    width: 200px;
+}
+.signinouter button{
+    height: 40px;
+    border-radius: 8px;
+    background-color: rgb(245, 110, 122);
+    color: white;
+    font-weight:700;
+    font-size: large;
+    border: transparent;
+    font-family: 'Ysabeau Infant', sans-serif;    
+}
+.signinbtmsignup{
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    
-    
-}
-.maincont{
-  
-    margin-top: 50px;
-}
-.sideimage{
-    height: 600px;
-    margin-top: 50px;
 }
 
-
-
-.logincont1{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    border: solid 1px#d9d6d6;
-    padding: 20px 50px;
-    margin: 30px 30px 0px 30px;
-    width: 280px;
-    height: 400px;
-    align-items: center;
-}
-.logincont1 .instafonttitle{
-    height: 70px;
-    padding: 30px 30px;
-    
-}
-.logincont1 .orline span{
-    font-weight: 700;
-    color: #6a6565;
-}
-
-.logincont1 input{
-    width: 98%;
-    height: 35px;
-    padding: 5px 10px;
-  
-    
-  
-    
-}
-.logincont1 input::placeholder{
-    color: rgb(117,117,117);
-}
-.logincont1 input:focus{
-    outline: none;
-   
-}
-
-.logincont1 button{
-    width: 100%;
-    height: 50px;
-    background-color: rgb(55,151,240);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    margin: 10px;
-    font-size: large;
-    font-weight: 600;
-}
-.logincont1:hover button{
-    cursor: pointer;
-}
-
-.orline{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-   
-}
-.logincont2 {
-    border: solid 1px#d9d6d6;
-    padding: 20px;
-    padding-left: 100px;
-    margin: 10px 30px;
-}
-.logincont2 span{
-    color: rgb(55,151,240);
-    font-size: large;
-    font-weight: bold;
-    cursor: pointer;
-}
-.logincont3{
-   
-    display: flex;
-    gap: 20px;
-    flex-direction: column;
-    align-items: center;
-}
-
-
-    
-.logincont3 img{
-    width: 134px;
-    height: 44px;
-    gap: 5px;
-}
-.googleapple{
-    display: flex;
-    gap: 10px;
-}
-.facebook{
-    display: flex;
-    align-items: center;
-   
-}
-.facebook:hover img,span{
-    cursor: pointer;
-}
-.googleapple:hover{
-    cursor: pointer;
-}
-@media (max-width:900px){
-    .myimages{
-        display: none;
-    }
-}
