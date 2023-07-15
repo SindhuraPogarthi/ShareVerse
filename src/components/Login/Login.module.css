@@ -1,11 +1,20 @@
+.mainpage{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+}
+
 .container{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    width: 65%;
+    
 }
 .maincont{
-    margin-left: 100px;
+  
     margin-top: 50px;
 }
 .sideimage{
@@ -64,6 +73,9 @@
     font-size: large;
     font-weight: 600;
 }
+.logincont1:hover button{
+    cursor: pointer;
+}
 
 .orline{
     display: flex;
@@ -81,6 +93,7 @@
     color: rgb(55,151,240);
     font-size: large;
     font-weight: bold;
+    cursor: pointer;
 }
 .logincont3{
    
@@ -105,4 +118,10 @@
     display: flex;
     align-items: center;
    
+}
+.facebook:hover img,span{
+    cursor: pointer;
+}
+.googleapple:hover{
+    cursor: pointer;
 }
