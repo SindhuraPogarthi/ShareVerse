@@ -87,7 +87,7 @@ export default function Login() {
             >Sign Up</motion.button>
             <div className={styles.signinbtmsignup}>
                 <span>Already have an account?</span>
-                <span onClick={() => navigate('/login')}>Login</span>
+                <span onClick={() => navigate('/login')} className={styles.signupbtm}>Login</span>
                 
             </div>
 
