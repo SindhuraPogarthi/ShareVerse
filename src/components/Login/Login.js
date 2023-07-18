@@ -5,7 +5,7 @@ import lock from '../images/lock.png'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { auth } from '../../firebase'
-import { signInWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { signInWithEmailAndPassword} from 'firebase/auth'
 import { toast,Toaster } from 'react-hot-toast'
 
 export default function Login() {

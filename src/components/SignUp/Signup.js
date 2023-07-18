@@ -32,18 +32,17 @@ export default function Login() {
                             displayName:values.name
                         })
                     }).catch((err) => {
-                        if(err.message === "Firebase: Error (auth/email-already-in-use).")
-                            throw "Email already exists";
-
-                        else if(err.message === "Firebase: Error (auth/network-request-failed).")
-                            throw "Check internet connectivity"
-                        else if(err.message === "Firebase: Error (auth/invalid-email).")
-                            throw "Enter a valid email"
-                        else if(err.message === "Firebase: Password should be at least 6 characters (auth/weak-password).")
-                            throw "Password should contain atleast 6 characters"
-
-                        else
-                            throw err.message
+                        if (err.message === "auth/email-already-in-use") {
+                            throw new Error("Email already exists");
+                          } else if (err.message === "auth/network-request-failed") {
+                            throw new Error("Check internet connectivity");
+                          } else if (err.message === "auth/invalid-email") {
+                            throw new Error("Enter a valid email");
+                          } else if (err.message === "auth/weak-password") {
+                            throw new Error("Password should contain at least 6 characters");
+                          } else {
+                            throw new Error(err.message);
+                          }
                       }),
                     
              {
