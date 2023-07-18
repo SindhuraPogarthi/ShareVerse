@@ -6,7 +6,8 @@ import email from '../images/email.png'
 import { motion } from 'framer-motion'
 import { Toaster, toast } from 'react-hot-toast'
 import { auth } from '../../firebase'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
     const[values,setValues]=useState({
@@ -14,27 +15,46 @@ export default function Login() {
         email:"",
         password:"",
     })
+    const navigate=useNavigate();
    
-
     const handlesignup=()=>{
         if(!values.name || !values.email || !values.password){
             toast.error("All fields are mandatory")
             return;
         }
+        
         toast.promise(
-            fetch("https://cat-fact.herokuapp.com/facts"),
+                    createUserWithEmailAndPassword(auth,values.email,values.password)
+                    .then((res) => {
+                        const user=res.user;
+                        console.log(user)
+                        updateProfile(user,{
+                            displayName:values.name
+                        })
+                    }).catch((err) => {
+                        if(err.message === "Firebase: Error (auth/email-already-in-use).")
+                            throw "Email already exists";
+
+                        else if(err.message === "Firebase: Error (auth/network-request-failed).")
+                            throw "Check internet connectivity"
+                        else if(err.message === "Firebase: Error (auth/invalid-email).")
+                            throw "Enter a valid email"
+                        else if(err.message === "Firebase: Password should be at least 6 characters (auth/weak-password).")
+                            throw "Password should contain atleast 6 characters"
+
+                        else
+                            throw err.message
+                      }),
+                    
              {
                loading: 'Saving...',
-               success: <b>Settings saved!</b>,
-               error: <b>Could not save.</b>,
+               success: <b>Successfully Signed up!</b>,
+               error: err=> <b>{err}</b>
+               
              }
            );
-        createUserWithEmailAndPassword(auth,values.email,values.password).then((res)=>{
-            const user=res.user;
-            console.log(user)
-        }).catch((err)=>{
-            toast.error(err)
-        })
+           navigate('/login')
+        
     }
     
   return (
@@ -67,7 +87,8 @@ export default function Login() {
             >Sign Up</motion.button>
             <div className={styles.signinbtmsignup}>
                 <span>Already have an account?</span>
-                <span>Sign In</span>
+                <span onClick={() => navigate('/login')}>Login</span>
+                
             </div>
 
         </div>
