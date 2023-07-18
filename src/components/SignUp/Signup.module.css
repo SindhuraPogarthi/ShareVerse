@@ -1,4 +1,4 @@
-  @import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@400;700&display=swap');
 
 .container{
     background-image: url("../images/bg.jpg");
@@ -15,7 +15,7 @@
 .signinouter{
     display: flex;
     flex-direction: column;
-    gap: 35px;
+    gap: 28px;
     border-radius: 8px;
     width: 318px;
     height: 466px;
@@ -33,10 +33,17 @@
     height: 8%;
     border-radius: 8px;
     padding-left: 10px;
-    opacity: 0.8;
-    
- 
-    
+    opacity: 0.8;   
+}
+.signinemail{
+    border: solid 1px rgb(168, 166, 166,0.5);
+    display: flex;
+    align-items: center;
+    height: 8%;
+    border-radius: 8px;
+    padding-left: 10px;
+    opacity: 0.8; 
+
 }
 .signinusername input{
     width: 90%;
@@ -104,4 +111,23 @@
     justify-content: space-between;
     align-items: center;
 }
+.signinemail input{
+    width: 90%;
+    background-color: transparent;
+    border: transparent;
+    font-weight: 400;
+    font-size: larger;
+    font-family: 'Ysabeau Infant', sans-serif;
+    color: white; 
+}
+.signinemail input:focus{
+    outline: none;
+    
+}
+.signinemail ::placeholder{
+    color: white;
+}
+.signinemail img{
+    width: 20px;
 
+}
