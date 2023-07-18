@@ -8,7 +8,7 @@ export default function Mainpage(props) {
 
   const handlesignout=()=>{
     signOut(auth).then(()=>{
-      navigate("/")
+      navigate("/login")
     })
   }
   const handlesubmit=()=>{
