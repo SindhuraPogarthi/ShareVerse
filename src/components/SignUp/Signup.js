@@ -3,10 +3,11 @@ import styles from './Signup.module.css'
 import user from '../images/user.png'
 import lock from '../images/lock.png'
 import email from '../images/email.png'
+import google from '../images/google.png'
 import { motion } from 'framer-motion'
 import { Toaster, toast } from 'react-hot-toast'
-import { auth } from '../../firebase'
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { auth, provider } from '../../firebase'
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
@@ -55,6 +56,36 @@ export default function Login() {
            navigate('/login')
         
     }
+
+    const handlegoogle=()=>{
+        toast.promise(
+            signInWithPopup(auth,provider)
+            .then((result)=>{
+                const credential=GoogleAuthProvider.credentialFromResult(result);
+                const token=credential.accessToken;
+                const user=result.user
+                console.log(user)
+                console.log(token)
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+            }),
+             {
+               loading: 'Saving...',
+               success: <b>Successfully Signed up!</b>,
+               error: err=> <b>{err}</b>
+               
+             }
+           );
+           navigate('/mainpage')
+
+        
+    }
     
   return (
     <div className={styles.container}>
@@ -84,6 +115,10 @@ export default function Login() {
                 whileTap={{scale:0.4}}
                 onClick={handlesignup}
             >Sign Up</motion.button>
+            <div className={styles.google} onClick={handlegoogle}>
+                <img src={google} alt='google'></img>
+                <span>Login in with google</span>
+            </div>
             <div className={styles.signinbtmsignup}>
                 <span>Already have an account?</span>
                 <span onClick={() => navigate('/login')} className={styles.signupbtm}>Login</span>

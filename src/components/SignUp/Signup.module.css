@@ -15,11 +15,10 @@
 .signinouter{
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 23px;
     border-radius: 8px;
     width: 318px;
-    height: 466px;
-    padding: 0px 41px;
+    padding: 41px;
     background-color: rgb(255,255,255,0.1);
     backdrop-filter: blur(10px);
 }
@@ -95,6 +94,7 @@
 }
 .signinouter .addtionalline span{
     width: 200px;
+    margin: 0;
 }
 .signinouter button{
     height: 40px;
@@ -134,10 +134,27 @@
 .signinbtmsignup .signupbtm{
     cursor: pointer;
 }
+.google img{  
+    width: 30px;
+   
+}
+.google{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    cursor: pointer;
+}
+
+
+
+
+
 @media (max-width:400px){
     .signinouter{
         display: flex;
         height: 100vh;
         justify-content: center;
+        padding: 0 41px;
     }
 }

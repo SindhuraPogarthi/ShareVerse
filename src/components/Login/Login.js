@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styles from './Login.module.css'
 import user from '../images/user.png'
 import lock from '../images/lock.png'
+import google from '../images/google.png'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { auth } from '../../firebase'
@@ -65,6 +66,10 @@ export default function Login() {
                 whileTap={{scale:0.4}}
                 onClick={handlelogin}
             >Login</motion.button>
+            <div className={styles.google}>
+                <img src={google} alt='google'></img>
+                <span>Login in with google</span>
+            </div>
             <div className={styles.signinbtmsignup}>
                 <span>Already have an account?</span>
                 <span onClick={()=>navigate('/')} className={styles.signupbtm}>Sign Up</span>
