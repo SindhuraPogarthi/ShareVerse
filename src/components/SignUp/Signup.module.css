@@ -19,7 +19,7 @@
     border-radius: 8px;
     width: 318px;
     height: 466px;
-    padding: 41px;
+    padding: 0px 41px;
     background-color: rgb(255,255,255,0.1);
     backdrop-filter: blur(10px);
 }
@@ -137,7 +137,7 @@
 @media (max-width:400px){
     .signinouter{
         display: flex;
-        height: 100%;
+        height: 100vh;
         justify-content: center;
     }
 }
