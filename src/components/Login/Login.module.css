@@ -115,6 +115,7 @@
     justify-content: center;
     gap: 20px;
     cursor: pointer;
+    
 }
 @media (max-width:400px){
     .signinouter{
