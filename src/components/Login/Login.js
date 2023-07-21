@@ -32,16 +32,25 @@ export default function Login() {
         .then((res) => {
           const user = res.user;
           console.log(user);
-          navigate("/mainpage");
+          setTimeout(() => {
+            navigate('/mainpage')
+          }, 1000);
         })
         .catch((err) => {
-          throw err.message;
+            if (err.message === "Firebase: Error (auth/invalid-email).") {
+                throw new Error("Enter a valid email");
+            }
+            else if (err.message === "Firebase: Error (auth/wrong-password).") {
+                throw new Error("Enter a valid password");
+            }
+
+          throw new Error(err);
         }),
 
       {
         loading: "Saving...",
-        success: <b>Successfully Signed up!</b>,
-        error: (err) => <b>{err}</b>,
+        success: <b>Successfully Logged in!</b>,
+        error: (err) => <b>{err.message}</b>,
       }
     );
   };

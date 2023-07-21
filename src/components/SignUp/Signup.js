@@ -32,28 +32,32 @@ export default function Login() {
                         updateProfile(user,{
                             displayName:values.name
                         })
+                        setTimeout(() => {
+                          navigate('/login')
+                        }, 1000);
                     }).catch((err) => {
-                        if (err.message === "auth/email-already-in-use") {
-                            throw new Error("Email already exists");
-                          } else if (err.message === "auth/network-request-failed") {
+                      console.log('hi')
+                        if (err.message === "Firebase: Error (auth/email-already-in-use).") {
+                            throw new Error("Email already exists")
+                          } else if (err.message === "Firebase: Error (auth/network-request-failed).") {
                             throw new Error("Check internet connectivity");
-                          } else if (err.message === "auth/invalid-email") {
+                          } else if (err.message === "Firebase: Error (auth/invalid-email).") {
                             throw new Error("Enter a valid email");
-                          } else if (err.message === "auth/weak-password") {
+                          } else if (err.message === "Firebase: Error (auth/weak-password).") {
                             throw new Error("Password should contain at least 6 characters");
                           } else {
-                            throw new Error(err.message);
+                            throw new Error("An error occured");
                           }
                       }),
                     
              {
                loading: 'Saving...',
                success: <b>Successfully Signed up!</b>,
-               error: err=> <b>{err}</b>
+               error: (err) => <b>{err.message}</b>,
                
              }
            );
-           navigate('/login')
+           
         
     }
 
