@@ -1,7 +1,7 @@
-  @import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@400;700&display=swap');
 
 .container{
-    background-image: url("../images/wllpaper5.jpeg");
+    background-image: url("../../Assets/images/bg.jpg");
     height: 100vh;
     width: 100%;
     background-size: 100% 100%;
@@ -18,7 +18,6 @@
     gap: 23px;
     border-radius: 8px;
     width: 318px;
-    height: 466px;
     padding: 41px;
     background-color: rgb(255,255,255,0.1);
     backdrop-filter: blur(10px);
@@ -33,7 +32,17 @@
     height: 40px;
     border-radius: 8px;
     padding-left: 10px;
-    opacity: 0.8;    
+    opacity: 0.8;   
+}
+.signinemail{
+    border: solid 1px rgb(168, 166, 166,0.5);
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-radius: 8px;
+    padding-left: 10px;
+    opacity: 0.8; 
+
 }
 .signinusername input{
     width: 90%;
@@ -85,6 +94,7 @@
 }
 .signinouter .addtionalline span{
     width: 200px;
+    margin: 0;
 }
 .signinouter button{
     height: 40px;
@@ -101,10 +111,29 @@
     justify-content: space-between;
     align-items: center;
 }
+.signinemail input{
+    width: 90%;
+    background-color: transparent;
+    border: transparent;
+    font-weight: 400;
+    font-size: larger;
+    font-family: 'Ysabeau Infant', sans-serif;
+    color: white; 
+}
+.signinemail input:focus{
+    outline: none;
+    
+}
+.signinemail ::placeholder{
+    color: white;
+}
+.signinemail img{
+    width: 20px;
+
+}
 .signinbtmsignup .signupbtm{
     cursor: pointer;
 }
-
 .google img{  
     width: 30px;
    
@@ -117,11 +146,16 @@
     cursor: pointer;
     
 }
+
+
+
+
+
 @media (max-width:400px){
     .signinouter{
         display: flex;
         height: 100vh;
         justify-content: center;
+        padding: 0 41px;
     }
 }
-

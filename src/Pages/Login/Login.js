@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./Login.module.css";
-import user from "../images/user.png";
-import lock from "../images/lock.png";
-import google from "../images/google.png";
+import user from "../../Assets/images/user.png";
+import lock from "../../Assets/images/lock.png";
+import google from "../../Assets/images/google.png";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { auth, provider } from "../../firebase";
@@ -62,6 +62,9 @@ export default function Login() {
           const credential = GoogleAuthProvider.credentialFromResult(result);
           const token = credential.accessToken;
           const user = result.user;
+          if(user){
+            navigate("/mainpage");
+          }
           console.log(user);
           console.log(token);
         })
@@ -78,9 +81,9 @@ export default function Login() {
         loading: "Saving...",
         success: <b>Successfully Signed up!</b>,
         error: (err) => <b>{err}</b>,
-      }
+       }
     );
-    navigate("/mainpage");
+    
   };
   return (
     <div className={styles.container}>

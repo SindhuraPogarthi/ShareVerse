@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import styles from './Signup.module.css'
-import user from '../images/user.png'
-import lock from '../images/lock.png'
-import email from '../images/email.png'
-import google from '../images/google.png'
+import user from '../../Assets/images/user.png'
+import lock from '../../Assets/images/lock.png'
+import email from '../../Assets/images/email.png'
+import google from '../../Assets/images/google.png'
 import { motion } from 'framer-motion'
 import { Toaster, toast } from 'react-hot-toast'
 import { auth, provider } from '../../firebase'
@@ -29,12 +29,14 @@ export default function Login() {
                     .then((res) => {
                         const user=res.user;
                         console.log(user)
+                        
                         updateProfile(user,{
                             displayName:values.name
                         })
                         setTimeout(() => {
                           navigate('/login')
                         }, 1000);
+                        
                     }).catch((err) => {
                       console.log('hi')
                         if (err.message === "Firebase: Error (auth/email-already-in-use).") {
@@ -68,6 +70,9 @@ export default function Login() {
                 const credential=GoogleAuthProvider.credentialFromResult(result);
                 const token=credential.accessToken;
                 const user=result.user
+                if(user){
+                  navigate("/mainpage");
+                }
                 console.log(user)
                 console.log(token)
             }).catch((error) => {
@@ -86,7 +91,7 @@ export default function Login() {
                
              }
            );
-           navigate('/mainpage')
+           
 
         
     }

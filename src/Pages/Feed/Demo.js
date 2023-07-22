@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { ref, push, set, onValue, off } from "firebase/database";
+import { ref, push, set, onValue, off} from "firebase/database";
 import { database } from "../../firebase";
 
 export default function Demo() {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
-  const [userData, setUserData] = useState(null);
-
+  const [userData, setUserData] = useState([]);
+  
   const handlechange = () => {
     const db = database;
     const usersRef = ref(db, "users/");
@@ -19,17 +19,25 @@ export default function Demo() {
   };
 
   useEffect(() => {
-    
     const db = database;
-    const id = "-N_tN34MlA2D8O-KzK4x"
+    const usersRef = ref(db, "users/");
 
-    const useref = ref(db, `users/${id}`);
-    onValue(useref, (snapshot) => {
-      const data = snapshot.val();
-      setUserData(data);
-      
-      console.log(data);
+    onValue(usersRef, (snapshot) => {
+      const usersData = snapshot.val();
+      if (usersData) {
+        // Convert the object of users into an array
+        const usersArray = Object.entries(usersData).map(([id, user]) => ({
+          id,
+          ...user,
+        }));
+        setUserData(usersArray);
+      }
     });
+
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      off(usersRef);
+    };
   }, []);
 
   return (
@@ -52,13 +60,20 @@ export default function Demo() {
       <br />
       <button onClick={handlechange}>Save details</button>
 
-      {userData && (
+      {userData.length > 0 ? (
         <div>
           <h2>User Data:</h2>
-          <p>Name: {userData.Name}</p>
-          <p>Age: {userData.Age}</p>
+          {userData.map((user) => (
+            <div key={user.id}>
+              <p>Name: {user.Name}</p>
+              <p>Age: {user.Age}</p>
+            </div>
+          ))}
         </div>
+      ) : (
+        <p>No users found.</p>
       )}
     </div>
   );
 }
+

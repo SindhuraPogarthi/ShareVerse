@@ -2,6 +2,8 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
+import Navbar from './Navbar';
+import Demo from '../Pages/Feed/Demo';
 
 export default function Mainpage(props) {
   const navigate=useNavigate();
@@ -17,9 +19,11 @@ export default function Mainpage(props) {
   return (
     <div>
       {props.user?(
-        <div>
-            <h1>Welcome {props.user}</h1>
-            <button onClick={handlesignout}>Sign Out</button>
+        <div style={{display:"flex"}}>
+             {/* <h1>Welcome {props.user}</h1> */}
+            {/* <button onClick={handlesignout}>Sign Out</button> */} 
+            <Navbar/>
+            <Demo/>
         </div>
       ):(
         <div>
@@ -27,5 +31,6 @@ export default function Mainpage(props) {
         </div>
       )}
     </div>
+    
   )
 }
