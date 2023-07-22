@@ -7,6 +7,7 @@ export default function Friends() {
     
   
     const user = auth.currentUser;
+    console.log(user)
     if (!user) {
         return null;
     }
