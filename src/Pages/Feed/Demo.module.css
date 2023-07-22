@@ -1,0 +1,9 @@
+.cont{
+    flex-grow: 1;
+    border: solid 2px black;
+    height: 100vh;
+    overflow: scroll;
+}
+.cont::-webkit-scrollbar{
+    display: none;
+}

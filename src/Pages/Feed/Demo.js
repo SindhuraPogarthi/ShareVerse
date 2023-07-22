@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ref, push, set, onValue, off} from "firebase/database";
 import { database } from "../../firebase";
+import styles from './Demo.module.css'
 
 export default function Demo() {
   const [name, setName] = useState("");
@@ -41,7 +42,7 @@ export default function Demo() {
   }, []);
 
   return (
-    <div style={{flexGrow:"1",border:"solid 2px black",height:"100vh",overflow:"scroll"}}>
+    <div className={styles.cont}>
       <input
         type="text"
         value={name}
