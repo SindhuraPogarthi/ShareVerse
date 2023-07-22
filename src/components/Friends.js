@@ -13,13 +13,14 @@ export default function Friends() {
     }
 
     const {displayName,photoURL} = user;
+    const userUrl="https://img.icons8.com/ios-filled/50/user-male-circle.png" ;
 
   return (
     <div className={styles.cont}>
-        <div style={{margin:"20px 10px",display:'flex',alignItems:"center",justifyContent:"space-around"}}>
+        <div style={{margin:"20px 10px",display:'flex',alignItems:"center"}}>
 
-            <img src={photoURL} className={styles.images}></img>
-            <span>{displayName}</span>
+            <img src={photoURL ? photoURL : userUrl} alt='user' className={styles.images}></img>
+            <span style={{marginLeft:"10px"}}>{displayName}</span>
         </div>
         
     </div>
