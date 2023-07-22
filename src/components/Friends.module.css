@@ -1,0 +1,13 @@
+.cont{
+    height: 100vh;
+    width: 250px;
+    background-color: aquamarine;
+    padding: 0px 50px;
+  
+}
+.images{
+    height: 50px;  
+    border-radius: 50%;
+    
+   
+}

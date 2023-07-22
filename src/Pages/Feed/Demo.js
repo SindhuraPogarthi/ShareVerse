@@ -41,7 +41,7 @@ export default function Demo() {
   }, []);
 
   return (
-    <div>
+    <div style={{flexGrow:"1",border:"solid 2px black",height:"100vh",overflow:"scroll"}}>
       <input
         type="text"
         value={name}
