@@ -1,8 +1,74 @@
 .cont{
-    height: 100vh;
-    flex-grow: 1;
-   
+    height: 95vh;
+    flex-grow: 1; 
     background-color: aliceblue;
     margin: 0px;
+    padding-top: 30px;
+    
+    font-family: 'Ysabeau Infant', sans-serif;
+    font-weight: 400;
+    font-size: larger;
+    
+}
+.chatinfo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+.chatinfo img{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+.chaticons img:hover{
+    transform: scale(1.2);
+}
+.chaticons{
+    display: flex;
+    gap: 10px;
+    padding-right: 20px;
+    cursor: pointer;
+    margin-bottom:5px ;
+    
+}
+.contactname{
+    width: 120px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 10px;
+   
+}
+.searchbar{
+    margin: 5px 20px 0px 20px;
+    display: flex;
+}
+.searchbar input{
+    
+    outline: none;
+    padding-left: 15px;
+    border: none;
+    flex-grow: 1;
+    font-family: 'Ysabeau Infant', sans-serif;
+    font-weight: 400;
+    font-size: large;
+   
+    
+   
+}
+
+.messageouter{
+    display: flex;
+    align-items: center;
+    border: solid 2px rgb(196, 192, 192);
+    background-color: white;
+    width: 100%;
+    border-radius: 20px;
+    height: 40px;
+    overflow: hidden;
+    margin: 5px 0 6px 0;
+    
     
 }
