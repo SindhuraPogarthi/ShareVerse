@@ -1,8 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@400;700&display=swap');
+
 .cont{
     flex-grow: 1;
     border: solid 2px black;
     height: 100vh;
     overflow: scroll;
+    font-family: 'Ysabeau Infant', sans-serif;
+    font-weight: 400;
+   font-size: larger;
 }
 .cont::-webkit-scrollbar{
     display: none;

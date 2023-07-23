@@ -1,0 +1,10 @@
+
+.userchatinfo p{
+    margin: 0;
+}
+.userchatinfo span{
+    font-weight: 700;
+}
+.userchatinfo{
+    margin-top: 10px;
+}

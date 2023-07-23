@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lumanosimo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@400;700&display=swap');
+
 
 .navmain{
     display: flex;
@@ -8,6 +10,9 @@
     border-width: 0 1px;
     height: 100vh;
     display: flex;
+    font-family: 'Ysabeau Infant', sans-serif;
+    font-weight: 400;
+   font-size: larger;
     
   
 }

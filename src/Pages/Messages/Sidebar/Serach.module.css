@@ -1,0 +1,29 @@
+.search{
+    border-bottom: solid 1px gray;
+}
+
+.searchform input{
+    outline: none;
+    height: 25px;
+    width: 98%;
+    margin-top: 20px;
+     
+}
+.userchat img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    
+}
+.userchat{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-top: 12px;
+}
+.userchat:hover{
+    background-color: rgb(218, 230, 240);
+    border-radius: 10px;
+
+}
