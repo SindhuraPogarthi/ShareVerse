@@ -27,3 +27,12 @@
     border-radius: 10px;
 
 }
+.userchat p{
+    margin: 0;
+}
+.userchat span{
+    font-weight: 700;
+}
+.userchat{
+    margin-top: 10px;
+}

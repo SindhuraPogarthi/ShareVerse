@@ -4,7 +4,7 @@ import { auth } from '../../../firebase';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Search from './Search';
-import Chats from './Chats';
+// import Chats from './Chats';
 
 
 
@@ -42,10 +42,7 @@ export default function Sidebar() {
         <div className={styles.serach}>
             <Search/>
         </div>
-        <div className={styles.chatnames}>
-            <Chats/>
-
-        </div>
+        
     </div>
   )
 }
