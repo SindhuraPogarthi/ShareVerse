@@ -55,7 +55,7 @@ export default function Login() {
               });
             })
             .then(()=>{
-              return setDoc(doc(db, "userschats", user.uid),{})
+              return setDoc(doc(db, "userchats", user.uid),{})
             })
             
             .then(() => {

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Serach.module.css';
 import image from '../../../Assets/images/wllpaper2.webp';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, getDocs, setDoc,doc, updateDoc, serverTimestamp, getDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
+import { auth } from '../../../firebase';
+
 
 export default function Search() {
   const [username, setUsername] = useState('');
@@ -35,6 +37,44 @@ export default function Search() {
     });
   };
 
+  const handleselect=async(user)=>{
+    const myuser = auth.currentUser;
+    const combinedId= myuser.uid > user.uid? myuser.uid + user.uid: user.uid+myuser.uid
+    console.log(user.uid)
+    console.log(user.name)
+    console.log(user)
+    const res= await getDoc(doc(db,'chats',combinedId))
+    if(!res.exists()){
+      setDoc(doc(db, 'chats', combinedId), { messages: [] });
+
+      await setDoc(doc(db, 'userchats', user.uid), {
+        [combinedId]:{
+          userInfo:
+          {
+             uid: user.uid,
+             displayName: user.name,
+             photoURL: user.photoURL
+           },
+           date: serverTimestamp()
+         
+       }
+      });
+      await setDoc(doc(db, 'userchats', myuser.uid), {
+        [combinedId]: {
+          userInfo: {
+            uid: myuser.uid,
+            displayName: myuser.displayName,
+            photoURL: myuser.photoURL
+          },
+          date: serverTimestamp()
+        }
+      });
+      
+    }
+
+
+  }
+
   const userUrl = 'https://img.icons8.com/ios-filled/50/user-male-circle.png';
 
   return (
@@ -49,7 +89,7 @@ export default function Search() {
       </div>
       {users.map((user) => (
        
-        <div className={styles.userchat} key={user.uid}>
+        <div className={styles.userchat} key={user.uid} onClick={() => handleselect(user)}>
           <img src={user.photoURL ? user.photoURL : userUrl} alt='myimage'></img>
           <div className={styles.userchatinfo}>
             <span>{user.name}</span>
