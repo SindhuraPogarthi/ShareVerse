@@ -18,6 +18,7 @@ import { db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
 export default function Login() {
+  
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -36,19 +37,27 @@ export default function Login() {
       createUserWithEmailAndPassword(auth, values.email, values.password)
         .then((res) => {
           const user = res.user;
+         
           console.log(user);
 
           // Update user profile
           return updateProfile(user, {
             displayName: values.name,
+            
           })
             .then(() => {
               // Save user data to Firestore
               return setDoc(doc(db, "users", user.uid), {
+                uid:user.uid,
                 name: values.name,
                 email: values.email,
+                photoURL:user.photoURL
               });
             })
+            .then(()=>{
+              return setDoc(doc(db, "userschats", user.uid),{})
+            })
+            
             .then(() => {
               // After everything is successful, navigate to login and show success toast
               setTimeout(() => {
@@ -94,7 +103,18 @@ export default function Login() {
           }
           console.log(user);
           console.log(token);
+          return setDoc(doc(db, "users", user.uid), {
+            uid: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+          }).then(() => {
+            // Create an empty document for user chats in the "userchats" collection
+            return setDoc(doc(db, "userchats", user.uid), {});
+          });
+      
         })
+       
         .catch((error) => {
           // Handle Errors here.
           const errorCode = error.code;

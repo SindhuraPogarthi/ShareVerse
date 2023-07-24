@@ -13,6 +13,8 @@ import {
 } from "firebase/auth";
 
 import { toast, Toaster } from "react-hot-toast";
+import { db } from "../../firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 
 
@@ -73,6 +75,15 @@ export default function Login() {
           }
           console.log(user);
           console.log(token);
+          return setDoc(doc(db, "users", user.uid), {
+            uid: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+          }).then(() => {
+            // Create an empty document for user chats in the "userchats" collection
+            return setDoc(doc(db, "userchats", user.uid), {});
+          });
         })
         .catch((error) => {
           // Handle Errors here.

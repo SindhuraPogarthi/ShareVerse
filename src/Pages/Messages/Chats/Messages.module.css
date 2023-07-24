@@ -1,5 +1,7 @@
 .cont{
-    margin-bottom: 20px;
+    margin: 0 0 20px 20px;
+
+
 }
 .messageinfo img{
     height: 40px;
@@ -16,7 +18,7 @@
 }
 .wholeinfo{
     display: flex;
-    gap: 20px;
+    gap: 10px;
 }
 .messagecontent{
     max-width: 80%;
@@ -30,6 +32,7 @@
 .cont .owner{
     display: flex;
     flex-direction: row-reverse;
+    margin-right: 25px;
     .messagecontent{
         display: flex;
         flex-direction: column;
