@@ -20,13 +20,26 @@ export default function Chat() {
           </div>
 
         </div>
-        <div>
+        <div className={styles.mymessages}>
+          
+          <Messages/>
+          <Messages/>
+          <Messages/>
+          <Messages/>
+          <Messages/>
+          <Messages/>
+          <Messages/>
+          <Messages/>
+          <Messages/>
+          <Messages/>
+          <Messages/>
           <Messages/>
         </div>
         <div className={styles.searchbar}>
           <div className={styles.messageouter}>
             <input type='search'></input>
             <img width="30" height="30" src="https://img.icons8.com/ios-glyphs/60/happy--v1.png" alt="happy--v1"/>
+            <img width="25" height="25" src="https://img.icons8.com/ios/100/add-file.png" alt="add-file"/>            
             <img width="30" height="30" src="https://img.icons8.com/material-outlined/24/sent.png" alt="sent"/>
           </div>
         </div>

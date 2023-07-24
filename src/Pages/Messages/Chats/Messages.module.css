@@ -1,5 +1,45 @@
 .cont{
-    height: 81vh;
-    background-color: rgb(52, 124, 186);
+    margin-bottom: 20px;
+}
+.messageinfo img{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
     
+}
+.messageinfo{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: gray;
+    padding-top: 20px;
+}
+.wholeinfo{
+    display: flex;
+    gap: 20px;
+}
+.messagecontent{
+    max-width: 80%;
+}
+.messagecontent p{
+    background-color:rgb(196, 189, 189);
+    padding: 10px 20px;
+    border-radius: 0px 10px 10px 20px;
+    max-width: max-content;
+}
+.cont .owner{
+    display: flex;
+    flex-direction: row-reverse;
+    .messagecontent{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .messagecontent p{    
+        background-color: rgb(109, 165, 213);
+        border-radius: 10px 0px 20px 10px;
+       
+        
+    }
+   
 }

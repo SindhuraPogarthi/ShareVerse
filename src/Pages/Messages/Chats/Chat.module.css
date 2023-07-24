@@ -53,10 +53,7 @@
     flex-grow: 1;
     font-family: 'Ysabeau Infant', sans-serif;
     font-weight: 400;
-    font-size: large;
-   
-    
-   
+    font-size: large;  
 }
 
 .messageouter{
@@ -69,6 +66,11 @@
     height: 40px;
     overflow: hidden;
     margin: 5px 0 6px 0;
-    
-    
+    gap: 5px;    
+}
+.mymessages{
+    height: 80vh;
+    overflow: scroll;
+    margin-top: 10px;
+    border-top: solid 1px rgb(196, 192, 192);
 }

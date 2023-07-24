@@ -11,7 +11,10 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+
 import { toast, Toaster } from "react-hot-toast";
+
+
 
 export default function Login() {
   const navigate = useNavigate();
@@ -46,6 +49,9 @@ export default function Login() {
 
           throw new Error(err);
         }),
+
+
+        
 
       {
         loading: "Saving...",
