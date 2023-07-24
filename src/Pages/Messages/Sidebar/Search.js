@@ -7,7 +7,7 @@ import { db } from '../../../firebase';
 export default function Search() {
   const [username, setUsername] = useState('');
   const [users, setUsers] = useState([]);
-  let allusers
+  const [allUsers, setAllUsers] = useState([])
 
   useEffect(() => {
     const unsubscribe = listenForUsers(); // Start listening for changes when component mounts
@@ -15,11 +15,12 @@ export default function Search() {
   }, []);
 
   const handlechange=(e)=>{
-    setUsers(item=>{
-      // item.name.toLowerCase().includes(e.target.value.toLowerCase())
-      console.log(item)
-    })
-    
+    const inputValue = e.target.value.toLowerCase();
+      console.log(allUsers)
+
+      const filteredUsers = allUsers?.filter((item) => item.name.toLowerCase().includes(inputValue));
+      console.log(filteredUsers);
+      setUsers(filteredUsers);
   }
 
   const listenForUsers = () => {
@@ -29,8 +30,8 @@ export default function Search() {
       const updatedUsers = querySnapshot.docs
         .map((doc) => doc.data())
         .filter((user) => user.name.toLowerCase().includes(username.toLowerCase())); // Filter users whose names contain the input field value as a substring
-          allusers=updatedUsers
-          setUsers(allusers)
+          setAllUsers(updatedUsers)
+          setUsers(updatedUsers)
     });
   };
 
