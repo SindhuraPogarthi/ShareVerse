@@ -3,7 +3,10 @@ import styles from './Messages.module.css'
 
 
 
-export default function Messages() {
+
+export default function Messages({message}) {
+    
+    console.log(message)
   return (
     <div className={styles.cont}>
         <div className={`${styles.wholeinfo} ${styles.owner}`}>
