@@ -1,17 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styles from './Chat.module.css'
 import image from '../../../Assets/images/wllpaper2.webp'
 import Messages from './Messages'
+import { ChatContext } from '../../../components/context/chatcontext'
 
 
 export default function Chat() {
+  const {data}=useContext(ChatContext)
+  const userUrl="https://img.icons8.com/ios-filled/50/user-male-circle.png" ;
+  console.log(data)
   return (
     <div className={styles.cont}>
         <div className={styles.chatinfo}>
           <div className={styles.contactname}>
 
-            <img src={image} alt='myimg'></img>
-            <span>Camella</span>
+            <img src={data.user.photoURL?data.user.photoURL : userUrl} alt='myimg'></img>
+            <span>{data.user.name}</span>
           </div>
           <div className={styles.chaticons}>
           <img  src="https://img.icons8.com/windows/64/phone.png" alt="phone"/>        

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styles from "./Serach.module.css";
 import {
   collection,
@@ -14,10 +14,12 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { auth } from "../../../firebase";
+import { ChatContext } from "../../../components/context/chatcontext";
 
 export default function Search() {
   const [username, setUsername] = useState(""); 
   const [users, setUsers] = useState([]);
+  const {dispatch}=useContext(ChatContext)
 
   useEffect(() => {
     const unsubscribe = listenForUsers();
@@ -42,6 +44,8 @@ export default function Search() {
       const updatedUsers = querySnapshot.docs.map((doc) => doc.data());
       setUsers(updatedUsers);
     });
+
+   
   };
 
 
@@ -83,6 +87,8 @@ export default function Search() {
    
     setUsers(filteredUsers);
     setUsername("");
+
+    dispatch({type:"CHANGE_USER",payload:user})
     
   };
 
