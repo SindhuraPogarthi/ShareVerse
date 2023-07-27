@@ -9,6 +9,10 @@ import { ChatContext } from '../../../components/context/chatcontext'
 export default function Messages({message}) {
     const myuser=auth.currentUser
     const {data}=useContext(ChatContext)
+    const formatMessageTime = (timestamp) => {
+        const date = timestamp.toDate();
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      };
    
     
     console.log(message)
@@ -17,7 +21,7 @@ export default function Messages({message}) {
         <div className={`${styles.message} ${message.senderId === myuser.uid && styles.owner}`}>
             <div className={styles.messageinfo}>
                 <img src={message.senderId==myuser.uid?myuser.photoURL:data.user.photoURL}></img>
-                <span>Just now</span>
+                <span>{formatMessageTime(message.date)}</span>
             </div>
             <div className={styles.messagecontent}>
                 <p>{message.text}</p>

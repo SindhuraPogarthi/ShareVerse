@@ -1,5 +1,6 @@
 .search{
     border-bottom: solid 1px gray;
+    overflow: scroll;
 }
 
 .searchform input{
