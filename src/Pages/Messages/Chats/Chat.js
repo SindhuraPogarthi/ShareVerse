@@ -17,6 +17,7 @@ export default function Chat() {
 
   const [text, settext] = useState("");
   const [messages, setmessages] = useState([]);
+  
   console.log(data.chatId);
 
   useEffect(() => {
@@ -35,6 +36,10 @@ export default function Chat() {
     const myuser = auth.currentUser;
     console.log(myuser);
     console.log("Text value:", text);
+    if (!text) {
+     
+      return;
+    }
 
     await updateDoc(doc(db, "chats", data.chatId), {
       messages: arrayUnion({
@@ -44,18 +49,7 @@ export default function Chat() {
         date: Timestamp.now(),
       }),
     });
-    await updateDoc(doc(db, "userchats", myuser.uid), {
-      [data.chatId + ".lastmessage"]: {
-        text,
-      },
-      [data.chatId + ".date"]: serverTimestamp(),
-    });
-    await updateDoc(doc(db, "userchats", data.user.uid), {
-      [data.chatId + ".lastmessage"]: {
-        text,
-      },
-      [data.chatId + ".date"]: serverTimestamp(),
-    });
+    
 
     // Clear the input field after sending the message
     settext("");
@@ -104,25 +98,9 @@ export default function Chat() {
             onKeyDown={handlepress}
             value={text}
           ></input>
-          <img
-            width="30"
-            height="30"
-            src="https://img.icons8.com/ios-glyphs/60/happy--v1.png"
-            alt="happy--v1"
-          />
-          <img
-            width="25"
-            height="25"
-            src="https://img.icons8.com/ios/100/add-file.png"
-            alt="add-file"
-          />
-          <img
-            width="30"
-            height="30"
-            src="https://img.icons8.com/material-outlined/24/sent.png"
-            alt="sent"
-            onClick={handleSend}
-          />
+          <img width="30" height="30" src="https://img.icons8.com/ios-glyphs/60/happy--v1.png" alt="happy--v1"/>
+          <img width="25" height="25" src="https://img.icons8.com/ios/100/add-file.png" alt="add-file"/>
+          <img width="30" height="30" src="https://img.icons8.com/material-outlined/24/sent.png"alt="sent"onClick={handleSend}/>
         </div>
       </div>
     </div>
