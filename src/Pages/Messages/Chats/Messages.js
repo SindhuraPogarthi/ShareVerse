@@ -1,22 +1,27 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styles from './Messages.module.css'
+import { auth } from '../../../firebase'
+import { ChatContext } from '../../../components/context/chatcontext'
 
 
 
 
 export default function Messages({message}) {
+    const myuser=auth.currentUser
+    const {data}=useContext(ChatContext)
+   
     
     console.log(message)
   return (
     <div className={styles.cont}>
-        <div className={`${styles.wholeinfo} ${styles.owner}`}>
+        <div className={`${styles.message} ${message.senderId === myuser.uid && styles.owner}`}>
             <div className={styles.messageinfo}>
-                <img src='https://www.shutterstock.com/shutterstock/photos/2071252046/display_1500/stock-photo-portrait-of-cheerful-male-international-indian-student-with-backpack-learning-accessories-standing-2071252046.jpg' alt='myimg'></img>
+                <img src={message.senderId==myuser.uid?myuser.photoURL:data.user.photoURL}></img>
                 <span>Just now</span>
             </div>
             <div className={styles.messagecontent}>
-                <p>Hello</p>
-                <img height='200' width='200'src='https://www.shutterstock.com/shutterstock/photos/2071252046/display_1500/stock-photo-portrait-of-cheerful-male-international-indian-student-with-backpack-learning-accessories-standing-2071252046.jpg' alt='myimg'></img>
+                <p>{message.text}</p>
+               
             </div>
         </div>
         </div>

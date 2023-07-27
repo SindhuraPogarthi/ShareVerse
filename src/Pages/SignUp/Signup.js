@@ -52,6 +52,7 @@ export default function Login() {
                 name: values.name,
                 email: values.email,
                 photoURL:user.photoURL
+                
               });
             })
             .then(()=>{

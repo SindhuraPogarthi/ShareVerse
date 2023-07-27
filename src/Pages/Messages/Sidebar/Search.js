@@ -17,9 +17,12 @@ import { auth } from "../../../firebase";
 import { ChatContext } from "../../../components/context/chatcontext";
 
 export default function Search() {
+  
+  const {data}=useContext(ChatContext)
   const [username, setUsername] = useState(""); 
   const [users, setUsers] = useState([]);
   const {dispatch}=useContext(ChatContext)
+
 
   useEffect(() => {
     const unsubscribe = listenForUsers();
@@ -50,6 +53,8 @@ export default function Search() {
 
 
   const handleselect = async (user) => {
+    console.log(user)
+
     const myuser = auth.currentUser;
     const combinedId =
       myuser.uid > user.uid ? myuser.uid + user.uid : user.uid + myuser.uid;
@@ -64,6 +69,7 @@ export default function Search() {
             uid: user.uid,
             displayName: user.name,
             photoURL: user.photoURL,
+            
           },
           date: serverTimestamp(),
         },
@@ -74,12 +80,13 @@ export default function Search() {
             uid: myuser.uid,
             displayName: myuser.displayName,
             photoURL: myuser.photoURL,
+           
           },
           date: serverTimestamp(),
         },
       });
     }
-    const q = query(collection(db, "users"));
+    const q = query(collection(db, "users"), orderBy('name'));
     const querySnapshot = await getDocs(q);
     const updatedUsers = querySnapshot.docs.map((doc) => doc.data());
     const filteredUsers = updatedUsers.filter((item) => item.uid !== myuser.uid);
@@ -89,11 +96,12 @@ export default function Search() {
     setUsername("");
 
     dispatch({type:"CHANGE_USER",payload:user})
+   
     
   };
 
   const userUrl = "https://img.icons8.com/ios-filled/50/user-male-circle.png";
-
+ 
   return (
     <div className={styles.serach}>
       <div className={styles.searchform}>
@@ -116,6 +124,10 @@ export default function Search() {
           ></img>
           <div className={styles.userchatinfo}>
             <span>{user.name}</span>
+           <p>{data?.chatId?.lastmessage}</p>
+       
+           
+            
           </div>
         </div>
       ))}
