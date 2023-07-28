@@ -15,7 +15,7 @@ export default function Messages({message}) {
       };
 
     const ref=useRef()
-    console.log(ref.current)
+  
     useEffect(()=>{
         ref.current?.scrollIntoView ({behavior:"smooth"})
     },[message])

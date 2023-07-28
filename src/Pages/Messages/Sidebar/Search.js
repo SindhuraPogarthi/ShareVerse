@@ -21,6 +21,7 @@ export default function Search() {
   const {data}=useContext(ChatContext)
   const [username, setUsername] = useState(""); 
   const [users, setUsers] = useState([]);
+  const [allUsers, setAllUsers] = useState([])
   const {dispatch}=useContext(ChatContext)
 
 
@@ -33,7 +34,7 @@ export default function Search() {
     const inputValue = e.target.value.toLowerCase();
     setUsername(inputValue);
 
-    const filteredUsers = users?.filter((item) =>
+    const filteredUsers = allUsers?.filter((item) =>
       item.name.toLowerCase().includes(inputValue)
     );
 
@@ -46,9 +47,8 @@ export default function Search() {
     return onSnapshot(q, (querySnapshot) => {
       const updatedUsers = querySnapshot.docs.map((doc) => doc.data());
       setUsers(updatedUsers);
-    });
-
-   
+      setAllUsers(updatedUsers)
+    }); 
   };
 
 
