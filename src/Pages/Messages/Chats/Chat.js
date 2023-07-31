@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./Chat.module.css";
-import { auth, db } from "../../../firebase";
+import { auth, db, storage } from "../../../firebase";
 import Messages from "./Messages";
 import { ChatContext } from "../../../components/context/chatcontext";
 import {
@@ -10,14 +10,17 @@ import {
   onSnapshot,
   updateDoc,
 } from "firebase/firestore";
-import { serverTimestamp } from "firebase/database";
+import { uploadBytesResumable, getDownloadURL, ref } from "firebase/storage";
+import { v4 as uuid } from "uuid";
 
 export default function Chat() {
+  const userUrl = "https://img.icons8.com/ios-filled/50/user-male-circle.png";
   const { data } = useContext(ChatContext);
 
   const [text, settext] = useState("");
+  const [img, setImg] = useState(null);
   const [messages, setmessages] = useState([]);
-  
+
   console.log(data.chatId);
 
   useEffect(() => {
@@ -30,36 +33,72 @@ export default function Chat() {
     };
   }, [data.chatId]);
 
-  const userUrl = "https://img.icons8.com/ios-filled/50/user-male-circle.png";
-
   const handleSend = async () => {
     const myuser = auth.currentUser;
+
     console.log(myuser);
     console.log("Text value:", text);
-    if (!text) {
-     
-      return;
+
+    settext("");
+    setImg(null);
+
+    if(!img && !text){
+      return ""
     }
 
-    await updateDoc(doc(db, "chats", data.chatId), {
-      messages: arrayUnion({
-        id: Timestamp.now(),
-        text,
-        senderId: myuser.uid,
-        date: Timestamp.now(),
-      }),
-    });
-    
+    if (img) {
+      const storageRef = ref(storage, uuid());
 
-    // Clear the input field after sending the message
-    settext("");
+      const uploadTask = uploadBytesResumable(storageRef, img);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Progress of the upload can be monitored here (if needed).
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+  
+                await updateDoc(doc(db, "chats", data.chatId), {
+                  messages: arrayUnion({
+                    id: Timestamp.now(),
+                    text,
+                    senderId: myuser.uid,
+                    date: Timestamp.now(),
+                    img: downloadURL,
+                  }),
+                });
+              })
+          }
+        );
+      
+    } else {
+      await updateDoc(doc(db, "chats", data.chatId), {
+        messages: arrayUnion({
+          id: Timestamp.now(),
+          text,
+          senderId: myuser.uid,
+          date: Timestamp.now(),
+        }),
+      });
+
+      // Clear the input field after sending the message
+    }
+    
     console.log("Message sent!");
   };
+
+
   const handlepress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleSend();
-      settext("");
+    
     }
   };
 
@@ -98,9 +137,36 @@ export default function Chat() {
             onKeyDown={handlepress}
             value={text}
           ></input>
-          <img width="30" height="30" src="https://img.icons8.com/ios-glyphs/60/happy--v1.png" alt="happy--v1"/>
-          <img width="25" height="25" src="https://img.icons8.com/ios/100/add-file.png" alt="add-file"/>
-          <img width="30" height="30" src="https://img.icons8.com/material-outlined/24/sent.png"alt="sent"onClick={handleSend}/>
+          <img
+            width="30"
+            height="30"
+            src="https://img.icons8.com/ios-glyphs/60/happy--v1.png"
+            alt="happy--v1"
+          />
+          <input
+            type="file"
+            id="file"
+            style={{ display: "none" }}
+            onChange={(e) => {
+              console.log("Selected file:", e.target.files[0]);
+              setImg(e.target.files[0])}
+            }
+          />
+          <label htmlFor="file">
+            <img
+              width="25"
+              height="25"
+              src="https://img.icons8.com/ios/100/add-file.png"
+              alt="add-file"
+            />
+          </label>
+          <img
+            width="30"
+            height="30"
+            src="https://img.icons8.com/material-outlined/24/sent.png"
+            alt="sent"
+            onClick={handleSend}
+          />
         </div>
       </div>
     </div>

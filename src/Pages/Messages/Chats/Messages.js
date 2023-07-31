@@ -21,7 +21,7 @@ export default function Messages({message}) {
     },[message])
    
     
-    console.log(message)
+    // console.log(message)
   return (
     <div className={styles.cont}>
         <div ref={ref} className={`${styles.message} ${message.senderId === myuser.uid && styles.owner}`}>
@@ -30,7 +30,8 @@ export default function Messages({message}) {
                 <span>{formatMessageTime(message.date)}</span>
             </div>
             <div className={styles.messagecontent}>
-                <p>{message.text}</p>
+               {message.text &&  <p>{message.text}</p>}
+                {message.img && <img width="300"src={message.img} alt=''></img>}
                
             </div>
         </div>
