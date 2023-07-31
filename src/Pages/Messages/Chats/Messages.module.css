@@ -29,6 +29,9 @@
 
   
 }
+.messagecontent img{
+    border-radius: 15px;
+}
 .messagecontent p{
     background-color:rgb(196, 189, 189);
     padding: 10px 20px;
@@ -47,10 +50,10 @@
     
     .messagecontent p{    
         background-color: rgb(109, 165, 213);
-        border-radius: 10px 0px 20px 10px;
-    
-       
-        
+        border-radius: 10px 0px 20px 10px;     
+    }
+    .messagecontent img{
+        border-radius: 15px;
     }
    
 }
