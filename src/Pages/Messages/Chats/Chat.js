@@ -58,58 +58,53 @@ export default function Chat() {
       return ""
     }
 
-    
     if (img) {
-      const storageRef = ref(storage, uuid());
-      const uploadTask = uploadBytesResumable(storageRef, img);
+      // Show loading toast for image upload
+      toast.promise(
+        new Promise(async (resolve, reject) => {
+          const storageRef = ref(storage, uuid());
+          const uploadTask = uploadBytesResumable(storageRef, img);
   
-      try {
-        // Wait for the upload to complete
-        const snapshot = await new Promise((resolve, reject) => {
           uploadTask.on(
             "state_changed",
             (snapshot) => {
               const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
               console.log("Upload is " + progress + "% done");
-              if(progress!==100){
-
-                toast.loading("Sending")
-              }
-              if(progress === 100){
-                toast.success("Sent");
-              }
             },
             (error) => {
               console.log(error);
-              reject(error);
+              reject("Couldn't upload image");
             },
-            () => {
-              resolve(uploadTask.snapshot);
+            async () => {
+              try {
+                const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                await updateDoc(doc(db, "chats", data.chatId), {
+                  messages: arrayUnion({
+                    id: Timestamp.now(),
+                    text,
+                    senderId: myuser.uid,
+                    date: Timestamp.now(),
+                    img: downloadURL,
+                  }),
+                });
+                resolve("Sent");
+              } catch (error) {
+                console.log(error);
+                reject("Couldn't save the message. Please try again later.");
+              }
             }
           );
-        });
-  
-        // Get the download URL after upload completion
-        const downloadURL = await getDownloadURL(snapshot.ref);
-  
-        await updateDoc(doc(db, "chats", data.chatId), {
-          messages: arrayUnion({
-            id: Timestamp.now(),
-            text,
-            senderId: myuser.uid,
-            date: Timestamp.now(),
-            img: downloadURL,
-          }),
-        });       
-      
-      } catch (error) {
-        // Show error toast
-        toast.error("Couldn't save.");
-      }finally {
-        // Stop the loading toast once the message is sent or an error occurs
-        toast.dismiss();
-      }
-    }else {
+        }),
+        {
+          loading: "Sending...",
+          success:"Sent",
+          error: (errMsg) => {
+            toast.error(errMsg);
+          },
+        }
+      );
+    } else  {
+      // Send text message without loading toast
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
           id: Timestamp.now(),
@@ -118,13 +113,10 @@ export default function Chat() {
           date: Timestamp.now(),
         }),
       });
-
-      // Clear the input field after sending the message
     }
-    
+
     console.log("Message sent!");
   };
-
 
   const handlepress = (e) => {
     if (e.key === "Enter") {
