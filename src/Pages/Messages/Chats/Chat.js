@@ -194,6 +194,7 @@ export default function Chat() {
           />
           <label htmlFor="file">
             <img
+            className={styles.file}
               width="25"
               height="25"
               src="https://img.icons8.com/ios/100/add-file.png"
