@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from "./Chat.module.css";
 import { auth, db, storage } from "../../../firebase";
 import Messages from "./Messages";
@@ -22,13 +22,22 @@ export default function Chat() {
   const [text, settext] = useState("");
   const [img, setImg] = useState(null);
   const [messages, setmessages] = useState([]);
-  
+  const messagesRef = useRef(null);
+
 
   console.log(data.chatId);
+
+  const scrollToBottom = () => {
+    if (messagesRef.current) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
+  };
 
   useEffect(() => {
     const unSub = onSnapshot(doc(db, "chats", data.chatId), (doc) => {
       doc.exists() && setmessages(doc.data().messages);
+      scrollToBottom();
+
     });
 
     return () => {
@@ -146,7 +155,7 @@ export default function Chat() {
       </div>
       <div className={styles.mymessages}>
         {messages.map((m) => (
-          <Messages message={m} key={m.id} />
+          <Messages message={m} key={m.id}  ref={messagesRef}/>
         ))}
       </div>
       <div className={styles.searchbar}>
