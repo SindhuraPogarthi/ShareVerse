@@ -5,6 +5,7 @@ import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Search from './Search';
 // import Chats from './Chats';
+import Sideicons from '../../../components/Sideicons'
 
 
 
@@ -29,6 +30,8 @@ export default function Sidebar() {
     }
    
   return (
+    <>
+        <Sideicons/>
     <div className={styles.cont}>
         <nav className={styles.navbar}>
             <div className={styles.userdetails}>
@@ -44,5 +47,7 @@ export default function Sidebar() {
         </div>
         
     </div>
+</>
   )
+    
 }
