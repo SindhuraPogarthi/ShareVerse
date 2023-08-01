@@ -12,6 +12,8 @@ import {
 } from "firebase/firestore";
 import { uploadBytesResumable, getDownloadURL, ref } from "firebase/storage";
 import { v4 as uuid } from "uuid";
+import { Toaster, toast } from "react-hot-toast";
+
 
 export default function Chat() {
   const userUrl = "https://img.icons8.com/ios-filled/50/user-male-circle.png";
@@ -20,6 +22,7 @@ export default function Chat() {
   const [text, settext] = useState("");
   const [img, setImg] = useState(null);
   const [messages, setmessages] = useState([]);
+  
 
   console.log(data.chatId);
 
@@ -46,38 +49,58 @@ export default function Chat() {
       return ""
     }
 
+    
     if (img) {
       const storageRef = ref(storage, uuid());
-
       const uploadTask = uploadBytesResumable(storageRef, img);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // Progress of the upload can be monitored here (if needed).
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-            getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
   
-                await updateDoc(doc(db, "chats", data.chatId), {
-                  messages: arrayUnion({
-                    id: Timestamp.now(),
-                    text,
-                    senderId: myuser.uid,
-                    date: Timestamp.now(),
-                    img: downloadURL,
-                  }),
-                });
-              })
-          }
-        );
+      try {
+        // Wait for the upload to complete
+        const snapshot = await new Promise((resolve, reject) => {
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log("Upload is " + progress + "% done");
+              if(progress!==100){
+
+                toast.loading("Sending")
+              }
+              if(progress === 100){
+                toast.success("Sent");
+              }
+            },
+            (error) => {
+              console.log(error);
+              reject(error);
+            },
+            () => {
+              resolve(uploadTask.snapshot);
+            }
+          );
+        });
+  
+        // Get the download URL after upload completion
+        const downloadURL = await getDownloadURL(snapshot.ref);
+  
+        await updateDoc(doc(db, "chats", data.chatId), {
+          messages: arrayUnion({
+            id: Timestamp.now(),
+            text,
+            senderId: myuser.uid,
+            date: Timestamp.now(),
+            img: downloadURL,
+          }),
+        });       
       
-    } else {
+      } catch (error) {
+        // Show error toast
+        toast.error("Couldn't save.");
+      }finally {
+        // Stop the loading toast once the message is sent or an error occurs
+        toast.dismiss();
+      }
+    }else {
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
           id: Timestamp.now(),
@@ -169,6 +192,7 @@ export default function Chat() {
           />
         </div>
       </div>
+      <Toaster/>
     </div>
   );
 }
