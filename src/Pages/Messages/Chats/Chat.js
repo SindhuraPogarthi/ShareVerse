@@ -58,7 +58,7 @@ export default function Chat() {
       return ""
     }
 
-    if (img) {
+    if (img || (img && text)) {
       // Show loading toast for image upload
       toast.promise(
         new Promise(async (resolve, reject) => {
