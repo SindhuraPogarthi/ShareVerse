@@ -1,6 +1,6 @@
 # Shareverse
 
-![Project Logo](link_to_your_logo.png) <!-- If you have a logo, add it here -->
+![Project Logo](Shareverse.png) <!-- If you have a logo, add it here -->
 
 ## Table of Contents
 1. [Introduction](#introduction)
