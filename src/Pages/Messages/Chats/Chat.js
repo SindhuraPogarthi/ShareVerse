@@ -13,6 +13,8 @@ import {
 import { uploadBytesResumable, getDownloadURL, ref } from "firebase/storage";
 import { v4 as uuid } from "uuid";
 import { Toaster, toast } from "react-hot-toast";
+import Picker from 'emoji-picker-react';
+
 
 
 export default function Chat() {
@@ -23,6 +25,12 @@ export default function Chat() {
   const [img, setImg] = useState(null);
   const [messages, setmessages] = useState([]);
   const messagesRef = useRef(null);
+  const [showPicker, setShowPicker] = useState(false);
+
+  const OnhandleEmoji = (emojiObject, event) => {
+    settext(prevInput => prevInput + emojiObject.emoji);
+};
+
 
 
   console.log(data.chatId);
@@ -53,6 +61,7 @@ export default function Chat() {
 
     settext("");
     setImg(null);
+    setShowPicker(false)
 
     if(!img && !text){
       return ""
@@ -149,6 +158,12 @@ export default function Chat() {
         {messages.map((m) => (
           <Messages message={m} key={m.id}  ref={messagesRef}/>
         ))}
+        <div className={styles.emoji}>
+        {showPicker && <Picker
+          pickerStyle={{ width: '100%' }}
+          onEmojiClick={OnhandleEmoji} />}
+      
+        </div>
       </div>
       <div className={styles.searchbar}>
         <div className={styles.messageouter}>
@@ -166,7 +181,8 @@ export default function Chat() {
             height="30"
             src="https://img.icons8.com/ios-glyphs/60/happy--v1.png"
             alt="happy--v1"
-          />
+            onClick={() => setShowPicker(val => !val)} />
+        
           <input
             type="file"
             id="file"
