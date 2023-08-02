@@ -2,19 +2,22 @@
 
 
 .maincont{
-    display: flex;
-
-    font-size: larger;
-    font-family: 'Ysabeau Infant', sans-serif;
+   display: flex;
+   font-family: 'Ysabeau Infant', sans-serif;
+   font-weight: 400;
+   font-size:medium;
+   
 }
 
 .settings{
     border: solid 2px black;
     display: flex;
     width: 80%;
+    cursor: pointer;
 }
 .settings nav{
     margin-left: 10px;
+    
 }
 .basicsettings{
     display: flex;
@@ -23,8 +26,13 @@
 }
 
 .settingsmain{
-    margin-left: 100px;
-    width: 100%;
+    padding-left: 100px;
+    flex: 1;
+    font-family: 'Ysabeau Infant', sans-serif;
+    font-weight: 400;
+    font-size: larger;
+    border: solid 2px black;
+   
 }
 .contentinside div{
   
