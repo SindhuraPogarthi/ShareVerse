@@ -1,7 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@400;700&display=swap');
+
+
 .maincont{
     display: flex;
-    
+
+    font-size: larger;
+    font-family: 'Ysabeau Infant', sans-serif;
 }
+
 .settings{
     border: solid 2px black;
+    display: flex;
+    width: 80%;
+}
+.settings nav{
+    margin-left: 10px;
+}
+.basicsettings{
+    display: flex;
+    align-items: center;
+    gap: 200px;
+}
+
+.settingsmain{
+    margin-left: 100px;
+    width: 100%;
+}
+.contentinside div{
+  
+    display: flex;
+    gap: 20px ;
+}
+.contentinside{
+   display: flex;
+    margin-top: 20px;
+    margin-left:20px;
+
+}
+.settings nav{
+    width: 300px;
+    border-right: solid 1px rgb(196, 192, 192);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+.contentinside .contentinsidediv input{
+    width: 200px;
+    border: none;
+    border-bottom:solid 1px black ;
+    outline: none;
+    font-size: large;
+    font-family: 'Ysabeau Infant', sans-serif;
+}
+.contentinside .contentinsidediv{
+    display: flex;
+    flex-direction: column;
+     
+}
+.contentinside .contentinsidediv span{
+    display: flex;
+    justify-content: space-between;
+    gap: 120px;
+}
+.contentinside button{
+   margin-top: 80px;
+    margin-left: 90%;
+    width: max-content;
 }
