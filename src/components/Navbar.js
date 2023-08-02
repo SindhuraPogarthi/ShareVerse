@@ -22,6 +22,7 @@ export default function Navbar() {
 
     }
     const handlesettings=()=>{
+        navigate('/settings')
 
     }
     const handlesupport=()=>{

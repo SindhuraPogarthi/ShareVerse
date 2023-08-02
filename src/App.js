@@ -6,6 +6,7 @@ import Mainpage from './components/Mainpage'
 import { auth } from './firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import Msg from './Pages/Messages/Msg'
+import Settings from './Pages/Settings/Settings'
 
 
 export default function App() {
@@ -30,6 +31,7 @@ export default function App() {
             <Route path='/login' element={<Login/>}/>
             <Route path='/mainpage' element={<Mainpage user={user}/>}/>
             <Route path='/messages' element={<Msg/>}/>
+            <Route path='/settings' element={<Settings/>}/>
           </Routes>
           {/* <Routes>
             <Route path='/' element={<Mainpage/>}  />

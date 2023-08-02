@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { auth } from '../firebase';
-import { signOut } from 'firebase/auth';
+// import { auth } from '../firebase';
+// import { signOut } from 'firebase/auth';
 import Navbar from './Navbar';
 import Demo from '../Pages/Feed/Demo';
 import Friends from './Friends';
@@ -9,11 +9,11 @@ import Friends from './Friends';
 export default function Mainpage(props) {
   const navigate=useNavigate();
 
-  const handlesignout=()=>{
-    signOut(auth).then(()=>{
-      navigate("/login")
-    })
-  }
+  // const handlesignout=()=>{
+  //   signOut(auth).then(()=>{
+  //     navigate("/login")
+  //   })
+  // }
   const handlesubmit=()=>{
     navigate("/login")
   }
