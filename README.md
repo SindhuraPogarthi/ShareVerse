@@ -1,6 +1,6 @@
 # Shareverse
 
-![Project Logo](link_to_your_logo.png) <!-- If you have a logo, add it here -->
+![Project Logo](Shareverse.png) <!-- If you have a logo, add it here -->
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -15,7 +15,7 @@
 ## Introduction
 Shareverse is a platform where users can connect, chat, and share their thoughts with each other. It provides an interactive feed section where signed-up users can post updates, images, or links, and other users can view and interact with these posts.
 
-![Screenshot of Website](link_to_screenshot.png) <!-- If you have a screenshot, add it here -->
+![Screenshot of Website](Signup.png) <!-- If you have a screenshot, add it here -->
 
 ## Features
 - User Registration and Login
