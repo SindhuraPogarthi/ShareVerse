@@ -1,79 +1,91 @@
-@import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@400;700&display=swap');
-
-
 .maincont{
    display: flex;
-   font-family: 'Ysabeau Infant', sans-serif;
-   font-weight: 400;
-   font-size:medium;
+   font-family: 'Ysabeau Infant', sans-serif; 
+   font-size: large;
    
+  
+
+}
+.photochange{   
+    top: 0;
+    left: 0;
+    margin-left: 35%;
+    margin-top: 50px; 
+    position: relative;
+    margin-bottom: 50px;
+  
+    
+}
+.userphoto{
+    position: relative;
+    border-radius: 50%;
+    height: 120px;
+ 
+}
+.pencil{
+    position: absolute;
+    top: 74px;
+    left: 80px;
+    color: white;
+    border-radius: 50%;
+  
+  
+}
+.settingsmain{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
 }
 
 .settings{
-    border: solid 2px black;
-    display: flex;
-    width: 80%;
-    cursor: pointer;
+   border: solid 1px gray;
+   width:80%;
+   height: 80vh;
+   overflow: scroll;
+   margin-left: 10%; 
+   background-color: rgb(218, 230, 240);
+  
 }
-.settings nav{
-    margin-left: 10px;
+.generalsettings{
+
+    margin-bottom: 10px;
+    margin-top: 20px;
+    display: flex;
+    gap: 40px;
+    margin-left: 30%;
+    margin-right: 15%;
+    justify-content: space-between;
+    font-size: larger;
+    align-items: flex-end;
+   
+
+}
+.generalsettings input{
+    outline: none;
+    border: none;
+    border-bottom: solid 1px black;
+    font-family: 'Ysabeau Infant', sans-serif; 
+    font-size: larger;
+ 
+    /* mix-blend-mode: multiply; */
+    background-color: transparent;
+    margin-bottom: 5px;
+
     
 }
-.basicsettings{
-    display: flex;
-    align-items: center;
-    gap: 200px;
+.generalsettings span{
+    font-size: larger;
+    font-weight: 600;
 }
-
-.settingsmain{
-    padding-left: 100px;
-    flex: 1;
-    font-family: 'Ysabeau Infant', sans-serif;
-    font-weight: 400;
+.settings button{
+    border-radius: 7px;
+    margin-left: 90%;
+    margin-top: 40px;
+    font-family: 'Ysabeau Infant', sans-serif; 
     font-size: larger;
     border: solid 2px black;
-   
 }
-.contentinside div{
-  
-    display: flex;
-    gap: 20px ;
-}
-.contentinside{
-   display: flex;
-    margin-top: 20px;
-    margin-left:20px;
-
-}
-.settings nav{
-    width: 300px;
-    border-right: solid 1px rgb(196, 192, 192);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-}
-.contentinside .contentinsidediv input{
-    width: 200px;
-    border: none;
-    border-bottom:solid 1px black ;
-    outline: none;
-    font-size: large;
-    font-family: 'Ysabeau Infant', sans-serif;
-}
-.contentinside .contentinsidediv{
-    display: flex;
-    flex-direction: column;
-     
-}
-.contentinside .contentinsidediv span{
-    display: flex;
-    justify-content: space-between;
-    gap: 120px;
-}
-.contentinside button{
-   margin-top: 80px;
-    margin-left: 90%;
-    width: max-content;
+.settingsmain h1{
+    margin-left: 40%;
 }

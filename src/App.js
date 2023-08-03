@@ -31,7 +31,7 @@ export default function App() {
             <Route path='/login' element={<Login/>}/>
             <Route path='/mainpage' element={<Mainpage user={user}/>}/>
             <Route path='/messages' element={<Msg/>}/>
-            <Route path='/settings' element={<Settings/>}/>
+            <Route path='/settings' element={<Settings />}/>
           </Routes>
           {/* <Routes>
             <Route path='/' element={<Mainpage/>}  />
