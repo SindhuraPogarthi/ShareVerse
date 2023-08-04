@@ -17,7 +17,11 @@ export default function Demo() {
       Name: name,
       Age: age,
     });
+
+    setName("")
+    setAge("")
   };
+  
 
   useEffect(() => {
     const db = database;

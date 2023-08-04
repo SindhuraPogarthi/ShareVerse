@@ -4,7 +4,15 @@ import styles1 from "./Settings.module.css";
 import heart from "../../Assets/images/heart.gif";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
-import pencil from '../../Assets/images/pencil.png'
+import pencil from "../../Assets/images/pencil.png";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { updateProfile } from "firebase/auth";
+import { toast } from "react-hot-toast";
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -13,11 +21,12 @@ export default function Settings() {
   // const [showViewContent, setShowViewContent] = useState(false);
   // const [showWhatyousee, setShowWhatyousee] = useState(false);
   // const [showHelp, setShowHelp] = useState(false);
+  const [img, setImg] = useState(null);
   const [myuser, setMyUser] = useState(null);
-  const [username,setUsername] = useState(false)
-  const [email,setEmail] = useState(false)
-  const [Password,setPassword] = useState(false)
-  const [confirmPassword,setConfirmPassword] = useState(false)
+  const [username, setUsername] = useState(false);
+  const [email, setEmail] = useState(false);
+  const [Password, setPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -27,45 +36,87 @@ export default function Settings() {
     return () => {
       unsubscribe(); // Cleanup the listener when the component unmounts
     };
-  }, []);
+  });
   const handlehome = () => {
     navigate("/mainpage");
   };
-  const handlesearch = () => {
-
-  };
+  const handlesearch = () => {};
   const handlemessages = () => {
     navigate("/messages");
   };
-  const handlenotifi = () => {
-
-  };
-  const handlecreate = () => {
-
-  };
+  const handlenotifi = () => {};
+  const handlecreate = () => {};
   const handlesettings = () => {
     navigate("/settings");
   };
-  const handlesupport = () => {
+  const handlesupport = () => {};
 
+  const handleusername = () => {
+    setUsername((prev) => !prev);
   };
+  const handleemail = () => {
+    setEmail((prev) => !prev);
+  };
+  const handlepassword = () => {
+    setPassword((prev) => !prev);
+  };
+  const handleconfirmpasword = () => {
+    setConfirmPassword((prev) => !prev);
+  };
+  const handlesendverfi = () => {};
+  const handleEdit = () => {
+    toast.promise(
+      new Promise(async (resolve, reject) => {
+        const storage = getStorage();
+        const storageRef = ref(storage, myuser.displayName);
+        // console.log(myuser.displayName)
 
-  const handleusername=()=>{
-      setUsername((prev)=>!(prev))
-  }
-  const handleemail=()=>{
-      setEmail((prev)=>!(prev))
-  }
-  const handlepassword=()=>{
-      setPassword((prev)=>!(prev))
-  }
-  const handleconfirmpasword=()=>{
-      setConfirmPassword((prev)=>!(prev))
-  }
-  const handlesendverfi=()=>{
-
-  }
-  
+        const uploadTask = uploadBytesResumable(storageRef, img);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+            }
+          },
+          (error) => {
+            // Handle unsuccessful uploads
+          },
+          () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            getDownloadURL(uploadTask.snapshot.ref).then(
+              async (downloadURL) => {
+                console.log("File available at", downloadURL);
+                await updateProfile(myuser, {
+                  photoURL: downloadURL,
+                },
+                (error) => {
+                  console.log(error);
+                  reject("Couldn't upload image");
+                },);
+              }
+            );
+          }
+        );
+      }),
+      {
+        loading: "Sending...",
+        success:"Update Profile photo",
+        error: (errMsg) => {
+          toast.error(errMsg);
+        },
+      }
+    );
+  };
 
   return (
     <div className={styles1.maincont}>
@@ -128,45 +179,56 @@ export default function Settings() {
         {myuser && (
           <div className={styles1.settings}>
             <div className={styles1.photochange}>
-              <img className={styles1.userphoto} src={myuser.photoURL} alt=""></img>
-              <img src={pencil}height='30' width='30' alt="external-circle-gradak-writing-gradak-royyan-wijaya"className={styles1.pencil}       /> 
+              <img
+                className={styles1.userphoto}
+                src={myuser.photoURL}
+                alt=""
+              ></img>
+
+              <input
+                type="file"
+                id="file"
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  console.log("Selected file:", e.target.files[0]);
+                  setImg(e.target.files[0]);
+                }}
+              />
+              <label htmlFor="file">
+                <img
+                  src={pencil}
+                  height="30"
+                  width="30"
+                  alt="external-circle-gradak-writing-gradak-royyan-wijaya"
+                  className={styles1.pencil}
+                  onChange={(e) => {
+                    console.log("Selected file:", e.target.files[0]);
+                    setImg(e.target.files[0]);
+                  }}
+                />
+              </label>
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handleusername}>Change Username</span>
-              {username && 
-              
-                <input type="text" ></input>
-              }
+              {username && <input type="text"></input>}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handleemail}>Change Email</span>
-              {email && 
-              
-                <input type="text" ></input>
-              }
+              {email && <input type="text"></input>}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handlepassword}>Change Password</span>
-              {Password && 
-              
-                <input type="password" ></input>
-              }
+              {Password && <input type="password"></input>}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handleconfirmpasword}>Confirm Password</span>
-              {confirmPassword && 
-              
-                <input type="password" ></input>
-              }
+              {confirmPassword && <input type="password"></input>}
             </div>
             <div className={styles1.generalsettings}>
-              <span onClick={handlesendverfi}>Send verification Email</span> 
+              <span onClick={handlesendverfi}>Send verification Email</span>
             </div>
 
-
-            <button>Save!</button>
-          
-          
+            <button onClick={handleEdit}>Save!</button>
           </div>
         )}
       </div>

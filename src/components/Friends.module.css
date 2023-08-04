@@ -3,7 +3,7 @@
 .cont{
     height: 100vh;
     width: 250px;
-    background-color: rgb(218, 230, 240);
+    background-color: rgb(221, 235, 247);
     padding: 0px 50px;
     font-family: 'Ysabeau Infant', sans-serif;
     font-weight: 400;
@@ -12,6 +12,7 @@
 }
 .images{
     height: 50px;  
+    width: 50px;
     border-radius: 50%;
     
    

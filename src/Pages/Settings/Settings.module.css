@@ -20,6 +20,7 @@
     position: relative;
     border-radius: 50%;
     height: 120px;
+    width: 120px;
  
 }
 .pencil{
@@ -44,7 +45,7 @@
    height: 80vh;
    overflow: scroll;
    margin-left: 10%; 
-   background-color: rgb(218, 230, 240);
+   background-color: rgb(221, 235, 247);
   
 }
 .generalsettings{
@@ -74,10 +75,7 @@
 
     
 }
-.generalsettings span{
-    font-size: larger;
-    font-weight: 600;
-}
+
 .settings button{
     border-radius: 7px;
     margin-left: 90%;

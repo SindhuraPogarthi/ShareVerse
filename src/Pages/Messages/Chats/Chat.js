@@ -177,8 +177,7 @@ export default function Chat() {
             value={text}
           ></input>
           <img
-            width="30"
-            height="30"
+          
             src="https://img.icons8.com/ios-glyphs/60/happy--v1.png"
             alt="happy--v1"
             onClick={() => setShowPicker(val => !val)} />
