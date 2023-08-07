@@ -111,6 +111,7 @@ export default function Chat() {
             toast.error(errMsg);
           },
         }
+        
       );
     } else  {
       // Send text message without loading toast
