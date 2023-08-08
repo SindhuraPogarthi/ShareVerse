@@ -12,7 +12,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
-import { toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -28,15 +28,18 @@ export default function Settings() {
   const [Password, setPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(false);
 
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setMyUser(user);
       console.log(myuser);
-    });
+    },[]);
     return () => {
       unsubscribe(); // Cleanup the listener when the component unmounts
     };
   });
+
+  
   const handlehome = () => {
     navigate("/mainpage");
   };
@@ -64,6 +67,8 @@ export default function Settings() {
     setConfirmPassword((prev) => !prev);
   };
   const handlesendverfi = () => {};
+
+
   const handleEdit = () => {
     toast.promise(
       new Promise(async (resolve, reject) => {
@@ -75,49 +80,43 @@ export default function Settings() {
         uploadTask.on(
           "state_changed",
           (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log("Upload is " + progress + "% done");
-            switch (snapshot.state) {
-              case "paused":
-                console.log("Upload is paused");
-                break;
-              case "running":
-                console.log("Upload is running");
-                break;
-            }
           },
           (error) => {
-            // Handle unsuccessful uploads
+            console.log(error);
+            reject("Couldn't upload image");
           },
-          () => {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            getDownloadURL(uploadTask.snapshot.ref).then(
-              async (downloadURL) => {
-                console.log("File available at", downloadURL);
-                await updateProfile(myuser, {
+          async () => {
+            try {
+              const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+               await updateProfile(myuser, {
                   photoURL: downloadURL,
-                },
-                (error) => {
-                  console.log(error);
-                  reject("Couldn't upload image");
-                },);
-              }
-            );
+                },)
+                setMyUser((prevUser) => ({
+                  ...prevUser,
+                  photoURL: downloadURL, // Update the photoURL in the myuser state
+                }));
+               
+              
+              resolve("Sent");
+            } catch (error) {
+              console.log(error);
+              reject("Couldn't save the message. Please try again later.");
+            }
           }
         );
       }),
       {
-        loading: "Sending...",
-        success:"Update Profile photo",
+        loading: "Updating...",
+        success:"Updated",
         error: (errMsg) => {
           toast.error(errMsg);
         },
       }
+      
     );
-  };
-
+  }
   return (
     <div className={styles1.maincont}>
       <nav className={styles.navmain}>
@@ -231,6 +230,7 @@ export default function Settings() {
             <button onClick={handleEdit}>Save!</button>
           </div>
         )}
+      <Toaster/>
       </div>
     </div>
   );

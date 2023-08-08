@@ -178,7 +178,7 @@ export default function Chat() {
             value={text}
           ></input>
           <img
-          
+            height="30"
             src="https://img.icons8.com/ios-glyphs/60/happy--v1.png"
             alt="happy--v1"
             onClick={() => setShowPicker(val => !val)} />
@@ -186,6 +186,7 @@ export default function Chat() {
           <input
             type="file"
             id="file"
+            
             style={{ display: "none" }}
             onChange={(e) => {
               console.log("Selected file:", e.target.files[0]);
