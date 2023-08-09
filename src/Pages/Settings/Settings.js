@@ -113,8 +113,7 @@ export default function Settings() {
         error: (errMsg) => {
           toast.error(errMsg);
         },
-      }
-      
+      }  
     );
   }
   return (
