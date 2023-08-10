@@ -36,7 +36,7 @@ export default function Login() {
       signInWithEmailAndPassword(auth, values.email, values.password)
         .then((res) => {
           const user = res.user;
-          console.log(user);
+          // console.log(user);
           setTimeout(() => {
             navigate('/mainpage')
           }, 1000);

@@ -20,6 +20,7 @@ export default function Sidebar() {
     }
 
     const {displayName,photoURL} = user;
+    
     const userUrl="https://img.icons8.com/ios-filled/50/user-male-circle.png" ;
 
     const handlelogout=()=>{
@@ -35,7 +36,7 @@ export default function Sidebar() {
     <div className={styles.cont}>
         <nav className={styles.navbar}>
             <div className={styles.userdetails}>
-                <img src={photoURL ? photoURL : userUrl} alt='user' className={styles.images}></img>
+                <img src={photoURL ?? userUrl} alt='user' className={styles.images}></img>
                 <span style={{marginLeft:"10px"}}>{displayName}</span>
             </div>
             <button className={styles.logout} onClick={handlelogout}>

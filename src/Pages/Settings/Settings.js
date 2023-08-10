@@ -5,6 +5,7 @@ import heart from "../../Assets/images/heart.gif";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import pencil from "../../Assets/images/pencil.png";
+import {updatePassword,updateEmail } from "firebase/auth";
 import {
   getStorage,
   ref,
@@ -13,8 +14,12 @@ import {
 } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
 import { Toaster, toast } from "react-hot-toast";
+import { db } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
 
 export default function Settings() {
+  const userUrl = "https://img.icons8.com/ios-filled/50/user-male-circle.png";
+
   const navigate = useNavigate();
   // const [showBasicInfo, setShowBasicInfo] = useState(false);
   // const [showProfilePhoto, setShowProfilePhoto] = useState(false);
@@ -44,7 +49,7 @@ export default function Settings() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setMyUser(user);
-      console.log(myuser);
+      
     },[]);
     return () => {
       unsubscribe(); // Cleanup the listener when the component unmounts
@@ -86,19 +91,22 @@ export default function Settings() {
 
   }
   const emailinput=(e)=>{
-    setUsername((prev)=>({...prev,myemail:e.target.value}))
+    setEmail((prev)=>({...prev,myemail:e.target.value}))
   }
   const passwordinput=(e)=>{
-    setUsername((prev)=>({...prev,mypassword:e.target.value}))
+    setPassword((prev)=>({...prev,mypassword:e.target.value}))
   }
   const confirmpasswordinput=(e)=>{
-    setUsername((prev)=>({...prev,confirmpassword:e.target.value}))
+    setConfirmPassword((prev)=>({...prev,confirmpassword:e.target.value}))
   }
 
 
   const handleEdit = () => {
     toast.promise(
       new Promise(async (resolve, reject) => {
+
+        
+
         const storage = getStorage();
         const storageRef = ref(storage, myuser.displayName);
         // console.log(myuser.displayName)
@@ -124,25 +132,64 @@ export default function Settings() {
                   ...prevUser,
                   photoURL: downloadURL, // Update the photoURL in the myuser state
                 }));
+                await updateDoc(doc(db, "users", myuser.uid), {
+                  photoURL: downloadURL,
+                });
                
                 if(username.name){
                   await updateProfile(myuser, {
                     displayName: username.name,
                   },)
-                  setMyUser((prevUser) => ({
-                    ...prevUser,
-                    displayName: username.name, // Update the photoURL in the myuser state
-                  }));
+              
+                  
+                  await updateDoc(doc(db, "users", myuser.uid), {
+                    name: username.name,
+                  });
+
+                
                 }
-                if(email.myemail){
-                  await updateProfile(myuser, {
-                    displayName: email.myemail,
-                  },)
-                  setMyUser((prevUser) => ({
-                    ...prevUser,
-                    displayName: email.myemail, // Update the photoURL in the myuser state
-                  }));
+                if (email.myemail) {
+                  const user = auth.currentUser;
+                  try {
+                    await updateEmail(user, email.myemail);
+                
+                    setMyUser((prevUser) => ({
+                      ...prevUser,
+                      email: email.myemail,
+                    }));
+
+                    await updateDoc(doc(db, "users", myuser.uid), {
+                      email:email.myemail,
+                    });
+                   
+                    // Update successful
+                
+                  } catch (error) {
+                    console.error("Error reauthenticating:", error);
+                    // Handle reauthentication error
+                  }
+                } 
+
+                if (Password.mypassword === confirmPassword.confirmpassword) {
+                  const user = auth.currentUser;
+                
+                
+                  try {
+                    await updatePassword(user, Password.mypassword);
+                
+                    // Password updated successfully
+                    console.log("Password updated successfully!");
+                
+                    // Note: You might want to handle UI updates and inform the user.
+                  } catch (error) {
+                    // Handle reauthentication error
+                    console.log("Password not updated successfully!");
+                  }
                 }
+                else{
+                  reject("Check the password again")
+                }
+                
               resolve("Sent");
             } catch (error) {
               console.log(error);
@@ -225,7 +272,7 @@ export default function Settings() {
             <div className={styles1.photochange}>
               <img
                 className={styles1.userphoto}
-                src={myuser.photoURL}
+                src={myuser.photoURL?myuser.photoURL:userUrl}
                 alt=""
               ></img>
 
