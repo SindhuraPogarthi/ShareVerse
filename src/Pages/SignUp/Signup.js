@@ -51,7 +51,8 @@ export default function Login() {
                 uid:user.uid,
                 name: values.name,
                 email: values.email,
-                photoURL:user.photoURL
+                photoURL:user.photoURL,
+                password:values.password
                 
               });
             })

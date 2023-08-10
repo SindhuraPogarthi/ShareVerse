@@ -23,10 +23,22 @@ export default function Settings() {
   // const [showHelp, setShowHelp] = useState(false);
   const [img, setImg] = useState(null);
   const [myuser, setMyUser] = useState(null);
-  const [username, setUsername] = useState(false);
-  const [email, setEmail] = useState(false);
-  const [Password, setPassword] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState(false);
+  const [username, setUsername] = useState({
+    state:false,
+    name:""
+  });
+  const [email, setEmail] = useState({
+    state:false,
+    myemail:""
+  });
+  const [Password, setPassword] = useState({
+    state:false,
+    mypassword:""
+  });
+  const [confirmPassword, setConfirmPassword] = useState({
+    state:false,
+    confirmpassword:""
+  });
 
 
   useEffect(() => {
@@ -68,6 +80,21 @@ export default function Settings() {
   };
   const handlesendverfi = () => {};
 
+  const usernameinput=(e)=>{
+    setUsername((prev)=>({...prev,name:e.target.value}))
+    console.log(username)
+
+  }
+  const emailinput=(e)=>{
+    setUsername((prev)=>({...prev,myemail:e.target.value}))
+  }
+  const passwordinput=(e)=>{
+    setUsername((prev)=>({...prev,mypassword:e.target.value}))
+  }
+  const confirmpasswordinput=(e)=>{
+    setUsername((prev)=>({...prev,confirmpassword:e.target.value}))
+  }
+
 
   const handleEdit = () => {
     toast.promise(
@@ -98,7 +125,24 @@ export default function Settings() {
                   photoURL: downloadURL, // Update the photoURL in the myuser state
                 }));
                
-              
+                if(username.name){
+                  await updateProfile(myuser, {
+                    displayName: username.name,
+                  },)
+                  setMyUser((prevUser) => ({
+                    ...prevUser,
+                    displayName: username.name, // Update the photoURL in the myuser state
+                  }));
+                }
+                if(email.myemail){
+                  await updateProfile(myuser, {
+                    displayName: email.myemail,
+                  },)
+                  setMyUser((prevUser) => ({
+                    ...prevUser,
+                    displayName: email.myemail, // Update the photoURL in the myuser state
+                  }));
+                }
               resolve("Sent");
             } catch (error) {
               console.log(error);
@@ -116,6 +160,8 @@ export default function Settings() {
       }  
     );
   }
+
+  
   return (
     <div className={styles1.maincont}>
       <nav className={styles.navmain}>
@@ -208,19 +254,19 @@ export default function Settings() {
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handleusername}>Change Username</span>
-              {username && <input type="text"></input>}
+              {username && <input type="text" value={username.name} onChange={usernameinput}></input>}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handleemail}>Change Email</span>
-              {email && <input type="text"></input>}
+              {email && <input type="text" value={email.myemail} onChange={emailinput}></input>}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handlepassword}>Change Password</span>
-              {Password && <input type="password"></input>}
+              {Password && <input type="password" value={Password.mypassword} onChange={passwordinput}></input>}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handleconfirmpasword}>Confirm Password</span>
-              {confirmPassword && <input type="password"></input>}
+              {confirmPassword && <input type="password" value={confirmPassword.confirmpassword} onChange={confirmpasswordinput}></input>}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handlesendverfi}>Send verification Email</span>
