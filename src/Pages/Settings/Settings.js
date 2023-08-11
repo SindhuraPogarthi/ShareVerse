@@ -72,16 +72,16 @@ export default function Settings() {
   const handlesupport = () => {};
 
   const handleusername = () => {
-    setUsername((prev) => !prev);
+    setUsername((prev) => ({...prev,state:!prev.state}));
   };
   const handleemail = () => {
-    setEmail((prev) => !prev);
+    setEmail((prev) => ({...prev,state:!prev.state}));
   };
   const handlepassword = () => {
-    setPassword((prev) => !prev);
+    setPassword((prev) => ({...prev,state:!prev.state}));
   };
   const handleconfirmpasword = () => {
-    setConfirmPassword((prev) => !prev);
+    setConfirmPassword((prev) => ({...prev,state:!prev.state}));
   };
   const handlesendverfi = () => {};
 
@@ -301,19 +301,19 @@ export default function Settings() {
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handleusername}>Change Username</span>
-              {username && <input type="text" value={username.name} onChange={usernameinput}></input>}
+              {username.state && <input type="text" value={username.name} onChange={usernameinput}></input>}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handleemail}>Change Email</span>
-              {email && <input type="text" value={email.myemail} onChange={emailinput}></input>}
+              {email.state && <input type="text" value={email.myemail} onChange={emailinput}></input>}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handlepassword}>Change Password</span>
-              {Password && <input type="password" value={Password.mypassword} onChange={passwordinput}></input>}
+              {Password.state && <input type="password" value={Password.mypassword} onChange={passwordinput}></input>}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handleconfirmpasword}>Confirm Password</span>
-              {confirmPassword && <input type="password" value={confirmPassword.confirmpassword} onChange={confirmpasswordinput}></input>}
+              {confirmPassword.state && <input type="password" value={confirmPassword.confirmpassword} onChange={confirmpasswordinput}></input>}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handlesendverfi}>Send verification Email</span>
