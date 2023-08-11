@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import pencil from "../../Assets/images/pencil.png";
 import {updatePassword,updateEmail } from "firebase/auth";
+import { getAuth, sendEmailVerification } from "firebase/auth";
+
 import {
   getStorage,
   ref,
@@ -83,7 +85,13 @@ export default function Settings() {
   const handleconfirmpasword = () => {
     setConfirmPassword((prev) => ({...prev,state:!prev.state}));
   };
-  const handlesendverfi = () => {};
+  const handlesendverfi = () => {
+          sendEmailVerification(auth.currentUser)
+        .then(() => {
+          // Email verification sent!
+          // ...
+        });
+  };
 
   const usernameinput=(e)=>{
     setUsername((prev)=>({...prev,name:e.target.value}))
