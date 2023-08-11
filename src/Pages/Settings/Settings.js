@@ -330,7 +330,7 @@ export default function Settings() {
               <span onClick={handleconfirmpasword}>Confirm Password</span>
               {confirmPassword.state && <input type="password" value={confirmPassword.confirmpassword} onChange={confirmpasswordinput}></input>}
             </div>
-            <div className={styles1.generalsettings}>
+            <div className={styles1.generalsettings} id={styles1.verification}>
               <span onClick={handlesendverfi}>Send verification Email</span>
             </div>
 
