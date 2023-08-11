@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import pencil from "../../Assets/images/pencil.png";
 import {updatePassword,updateEmail } from "firebase/auth";
-import { getAuth, sendEmailVerification } from "firebase/auth";
+import { sendEmailVerification } from "firebase/auth";
 
 import {
   getStorage,
@@ -86,11 +86,18 @@ export default function Settings() {
     setConfirmPassword((prev) => ({...prev,state:!prev.state}));
   };
   const handlesendverfi = () => {
-          sendEmailVerification(auth.currentUser)
-        .then(() => {
-          // Email verification sent!
-          // ...
-        });
+    toast.promise(
+      sendEmailVerification(auth.currentUser)
+    .then(() => {
+      // Email verification sent!
+      // ...
+    }),{
+      loading: 'Sending...',
+      success: <b>Email verification!</b>,
+      error: <b>Could not save.</b>,
+    }
+
+    )
   };
 
   const usernameinput=(e)=>{
