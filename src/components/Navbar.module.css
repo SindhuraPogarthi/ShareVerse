@@ -12,7 +12,7 @@
     display: flex;
     font-family: 'Ysabeau Infant', sans-serif;
     font-weight: 400;
-   font-size: larger;
+    font-size: 22px;
     
   
 }
@@ -21,6 +21,7 @@
     flex-direction: column;
     flex-grow: 1;
     align-items: center;
+    
     
 }
 .writtenlogo{

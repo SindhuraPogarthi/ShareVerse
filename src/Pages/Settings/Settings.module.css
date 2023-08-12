@@ -1,7 +1,7 @@
 .maincont{
    display: flex;
    font-family: 'Ysabeau Infant', sans-serif; 
-   font-size: large;
+ 
    
   
 
@@ -36,6 +36,7 @@
     display: flex;
     flex: 1;
     flex-direction: column;
+    font-size: large;
 
 }
 
@@ -93,5 +94,6 @@
 #verification:hover{
     transform: scale(1.1);
     font-weight: 600;
+    cursor: pointer;
    
 }

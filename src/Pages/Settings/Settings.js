@@ -5,7 +5,7 @@ import heart from "../../Assets/images/heart.gif";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import pencil from "../../Assets/images/pencil.png";
-import {updatePassword,updateEmail } from "firebase/auth";
+import { updatePassword, updateEmail } from "firebase/auth";
 import { sendEmailVerification } from "firebase/auth";
 
 import {
@@ -29,36 +29,33 @@ export default function Settings() {
   // const [showWhatyousee, setShowWhatyousee] = useState(false);
   // const [showHelp, setShowHelp] = useState(false);
   const [img, setImg] = useState(null);
-  const [myuser, setMyUser] = useState(null);
+  const [myuser, setMyUser] = useState(auth.currentUser);
   const [username, setUsername] = useState({
-    state:false,
-    name:""
+    state: false,
+    name: "",
   });
   const [email, setEmail] = useState({
-    state:false,
-    myemail:""
+    state: false,
+    myemail: "",
   });
   const [Password, setPassword] = useState({
-    state:false,
-    mypassword:""
+    state: false,
+    mypassword: "",
   });
   const [confirmPassword, setConfirmPassword] = useState({
-    state:false,
-    confirmpassword:""
+    state: false,
+    confirmpassword: "",
   });
-
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setMyUser(user);
-      
-    },[]);
+    }, []);
     return () => {
       unsubscribe(); // Cleanup the listener when the component unmounts
     };
   });
 
-  
   const handlehome = () => {
     navigate("/mainpage");
   };
@@ -74,156 +71,316 @@ export default function Settings() {
   const handlesupport = () => {};
 
   const handleusername = () => {
-    setUsername((prev) => ({...prev,state:!prev.state}));
+    setUsername((prev) => ({ ...prev, state: !prev.state }));
   };
   const handleemail = () => {
-    setEmail((prev) => ({...prev,state:!prev.state}));
+    setEmail((prev) => ({ ...prev, state: !prev.state }));
   };
   const handlepassword = () => {
-    setPassword((prev) => ({...prev,state:!prev.state}));
+    setPassword((prev) => ({ ...prev, state: !prev.state }));
   };
   const handleconfirmpasword = () => {
-    setConfirmPassword((prev) => ({...prev,state:!prev.state}));
+    setConfirmPassword((prev) => ({ ...prev, state: !prev.state }));
   };
   const handlesendverfi = () => {
     toast.promise(
-      sendEmailVerification(auth.currentUser)
-    .then(() => {
-      // Email verification sent!
-      // ...
-    }),{
-      loading: 'Sending...',
-      success: <b>Email verification!</b>,
-      error: <b>Could not save.</b>,
-    }
-
-    )
+      sendEmailVerification(auth.currentUser).then(() => {
+        // Email verification sent!
+        // ...
+      }),
+      {
+        loading: "Sending...",
+        success: <b>Email sent!</b>,
+        error: <b>Could not save.</b>,
+      }
+    );
   };
 
-  const usernameinput=(e)=>{
-    setUsername((prev)=>({...prev,name:e.target.value}))
-    console.log(username)
-
-  }
-  const emailinput=(e)=>{
-    setEmail((prev)=>({...prev,myemail:e.target.value}))
-  }
-  const passwordinput=(e)=>{
-    setPassword((prev)=>({...prev,mypassword:e.target.value}))
-  }
-  const confirmpasswordinput=(e)=>{
-    setConfirmPassword((prev)=>({...prev,confirmpassword:e.target.value}))
-  }
-
+  const usernameinput = (e) => {
+    setUsername((prev) => ({ ...prev, name: e.target.value }));
+    console.log(username);
+  };
+  const emailinput = (e) => {
+    setEmail((prev) => ({ ...prev, myemail: e.target.value }));
+  };
+  const passwordinput = (e) => {
+    setPassword((prev) => ({ ...prev, mypassword: e.target.value }));
+  };
+  const confirmpasswordinput = (e) => {
+    setConfirmPassword((prev) => ({
+      ...prev,
+      confirmpassword: e.target.value,
+    }));
+  };
 
   const handleEdit = () => {
     toast.promise(
       new Promise(async (resolve, reject) => {
-
-        
-
         const storage = getStorage();
         const storageRef = ref(storage, myuser.displayName);
-        // console.log(myuser.displayName)
 
-        const uploadTask = uploadBytesResumable(storageRef, img);
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
-          },
-          (error) => {
-            console.log(error);
-            reject("Couldn't upload image");
-          },
-          async () => {
-            try {
-              const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-               await updateProfile(myuser, {
+        if (img) {
+          const uploadTask = uploadBytesResumable(storageRef, img);
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log("Upload is " + progress + "% done");
+            },
+            (error) => {
+              console.log(error);
+              reject("Couldn't upload image");
+            },
+            async () => {
+              try {
+                const downloadURL = await getDownloadURL(
+                  uploadTask.snapshot.ref
+                );
+
+                await updateProfile(myuser, {
                   photoURL: downloadURL,
-                },)
+                });
+
                 setMyUser((prevUser) => ({
                   ...prevUser,
-                  photoURL: downloadURL, // Update the photoURL in the myuser state
+                  photoURL: downloadURL,
                 }));
+
                 await updateDoc(doc(db, "users", myuser.uid), {
                   photoURL: downloadURL,
                 });
-               
-                if(username.name){
+
+                if (username.name) {
                   await updateProfile(myuser, {
                     displayName: username.name,
-                  },)
-              
-                  
+                  });
+
                   await updateDoc(doc(db, "users", myuser.uid), {
                     name: username.name,
                   });
-
-                
                 }
                 if (email.myemail) {
                   const user = auth.currentUser;
                   try {
                     await updateEmail(user, email.myemail);
-                
+
                     setMyUser((prevUser) => ({
                       ...prevUser,
                       email: email.myemail,
                     }));
 
                     await updateDoc(doc(db, "users", myuser.uid), {
-                      email:email.myemail,
+                      email: email.myemail,
                     });
-                   
+
                     // Update successful
-                
                   } catch (error) {
                     console.error("Error reauthenticating:", error);
                     // Handle reauthentication error
                   }
-                } 
+                }
 
                 if (Password.mypassword === confirmPassword.confirmpassword) {
                   const user = auth.currentUser;
-                
-                
+
                   try {
                     await updatePassword(user, Password.mypassword);
-                
+
                     // Password updated successfully
                     console.log("Password updated successfully!");
-                
+
                     // Note: You might want to handle UI updates and inform the user.
                   } catch (error) {
                     // Handle reauthentication error
                     console.log("Password not updated successfully!");
                   }
+                } else {
+                  reject("Check the password again");
                 }
-                else{
-                  reject("Check the password again")
-                }
-                
-              resolve("Sent");
-            } catch (error) {
-              console.log(error);
-              reject("Couldn't save the message. Please try again later.");
+
+                resolve("Sent");
+              } catch (error) {
+                console.log(error);
+                reject("Couldn't save the changes. Please try again later.");
+              }
             }
+          );
+        } else {
+          // If no image is selected, handle only the non-image updates
+          try {
+            if (username.name) {
+              await updateProfile(myuser, {
+                displayName: username.name,
+              });
+
+              await updateDoc(doc(db, "users", myuser.uid), {
+                name: username.name,
+              });
+            }
+            if (email.myemail) {
+              const user = auth.currentUser;
+              try {
+                await updateEmail(user, email.myemail);
+
+                setMyUser((prevUser) => ({
+                  ...prevUser,
+                  email: email.myemail,
+                }));
+
+                await updateDoc(doc(db, "users", myuser.uid), {
+                  email: email.myemail,
+                });
+
+                // Update successful
+              } catch (error) {
+                console.error("Error reauthenticating:", error);
+                // Handle reauthentication error
+              }
+            }
+
+            if (Password.mypassword === confirmPassword.confirmpassword) {
+              const user = auth.currentUser;
+
+              try {
+                await updatePassword(user, Password.mypassword);
+
+                // Password updated successfully
+                console.log("Password updated successfully!");
+
+                // Note: You might want to handle UI updates and inform the user.
+              } catch (error) {
+                // Handle reauthentication error
+                console.log("Password not updated successfully!");
+              }
+            } else {
+              reject("Check the password again");
+            }
+
+            // ... (email and password update logic)
+
+            resolve("Sent");
+          } catch (error) {
+            console.log(error);
+            reject("Couldn't save the changes. Please try again later.");
           }
-        );
+        }
       }),
       {
         loading: "Updating...",
-        success:"Updated",
+        success: "Updated",
         error: (errMsg) => {
           toast.error(errMsg);
         },
-      }  
+      }
     );
-  }
+  };
 
-  
+  // const handleEdit = () => {
+  //   toast.promise(
+  //     new Promise(async (resolve, reject) => {
+
+  //       const storage = getStorage();
+  //       const storageRef = ref(storage, myuser.displayName);
+  //       // console.log(myuser.displayName)
+
+  //       const uploadTask = uploadBytesResumable(storageRef, img);
+  //       if(img){
+
+  //       }
+  //       uploadTask.on(
+  //         "state_changed",
+  //         (snapshot) => {
+  //           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //           console.log("Upload is " + progress + "% done");
+  //         },
+  //         (error) => {
+  //           console.log(error);
+  //           reject("Couldn't upload image");
+  //         },
+  //         async () => {
+  //           try {
+  //             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+  //              await updateProfile(myuser, {
+  //                 photoURL: downloadURL,
+  //               },)
+  //               setMyUser((prevUser) => ({
+  //                 ...prevUser,
+  //                 photoURL: downloadURL, // Update the photoURL in the myuser state
+  //               }));
+  //               await updateDoc(doc(db, "users", myuser.uid), {
+  //                 photoURL: downloadURL,
+  //               });
+
+  //               if(username.name){
+  //                 await updateProfile(myuser, {
+  //                   displayName: username.name,
+  //                 },)
+
+  //                 await updateDoc(doc(db, "users", myuser.uid), {
+  //                   name: username.name,
+  //                 });
+
+  //               }
+  //               if (email.myemail) {
+  //                 const user = auth.currentUser;
+  //                 try {
+  //                   await updateEmail(user, email.myemail);
+
+  //                   setMyUser((prevUser) => ({
+  //                     ...prevUser,
+  //                     email: email.myemail,
+  //                   }));
+
+  //                   await updateDoc(doc(db, "users", myuser.uid), {
+  //                     email:email.myemail,
+  //                   });
+
+  //                   // Update successful
+
+  //                 } catch (error) {
+  //                   console.error("Error reauthenticating:", error);
+  //                   // Handle reauthentication error
+  //                 }
+  //               }
+
+  //               if (Password.mypassword === confirmPassword.confirmpassword) {
+  //                 const user = auth.currentUser;
+
+  //                 try {
+  //                   await updatePassword(user, Password.mypassword);
+
+  //                   // Password updated successfully
+  //                   console.log("Password updated successfully!");
+
+  //                   // Note: You might want to handle UI updates and inform the user.
+  //                 } catch (error) {
+  //                   // Handle reauthentication error
+  //                   console.log("Password not updated successfully!");
+  //                 }
+  //               }
+  //               else{
+  //                 reject("Check the password again")
+  //               }
+
+  //             resolve("Sent");
+  //           } catch (error) {
+  //             console.log(error);
+  //             reject("Couldn't save the message. Please try again later.");
+  //           }
+  //         }
+  //       );
+  //     }),
+  //     {
+  //       loading: "Updating...",
+  //       success:"Updated",
+  //       error: (errMsg) => {
+  //         toast.error(errMsg);
+  //       },
+  //     }
+  //   );
+  // }
+
   return (
     <div className={styles1.maincont}>
       <nav className={styles.navmain}>
@@ -287,7 +444,7 @@ export default function Settings() {
             <div className={styles1.photochange}>
               <img
                 className={styles1.userphoto}
-                src={myuser.photoURL?myuser.photoURL:userUrl}
+                src={myuser.photoURL ? myuser.photoURL : userUrl}
                 alt=""
               ></img>
 
@@ -316,19 +473,43 @@ export default function Settings() {
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handleusername}>Change Username</span>
-              {username.state && <input type="text" value={username.name} onChange={usernameinput}></input>}
+              {username.state && (
+                <input
+                  type="text"
+                  value={username.name}
+                  onChange={usernameinput}
+                ></input>
+              )}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handleemail}>Change Email</span>
-              {email.state && <input type="text" value={email.myemail} onChange={emailinput}></input>}
+              {email.state && (
+                <input
+                  type="text"
+                  value={email.myemail}
+                  onChange={emailinput}
+                ></input>
+              )}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handlepassword}>Change Password</span>
-              {Password.state && <input type="password" value={Password.mypassword} onChange={passwordinput}></input>}
+              {Password.state && (
+                <input
+                  type="password"
+                  value={Password.mypassword}
+                  onChange={passwordinput}
+                ></input>
+              )}
             </div>
             <div className={styles1.generalsettings}>
               <span onClick={handleconfirmpasword}>Confirm Password</span>
-              {confirmPassword.state && <input type="password" value={confirmPassword.confirmpassword} onChange={confirmpasswordinput}></input>}
+              {confirmPassword.state && (
+                <input
+                  type="password"
+                  value={confirmPassword.confirmpassword}
+                  onChange={confirmpasswordinput}
+                ></input>
+              )}
             </div>
             <div className={styles1.generalsettings} id={styles1.verification}>
               <span onClick={handlesendverfi}>Send verification Email</span>
@@ -337,7 +518,7 @@ export default function Settings() {
             <button onClick={handleEdit}>Save!</button>
           </div>
         )}
-      <Toaster/>
+        <Toaster />
       </div>
     </div>
   );
