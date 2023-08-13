@@ -150,7 +150,7 @@ export default function Settings() {
                 await updateDoc(doc(db, "users", myuser.uid), {
                   photoURL: downloadURL,
                 });
-
+                setImg(null)
                 if (username.name) {
                   await updateProfile(myuser, {
                     displayName: username.name,
@@ -159,6 +159,8 @@ export default function Settings() {
                   await updateDoc(doc(db, "users", myuser.uid), {
                     name: username.name,
                   });
+
+                
                 }
                 if (email.myemail) {
                   const user = auth.currentUser;
@@ -179,6 +181,7 @@ export default function Settings() {
                     console.error("Error reauthenticating:", error);
                     // Handle reauthentication error
                   }
+               
                 }
 
                 if (Password.mypassword === confirmPassword.confirmpassword) {
@@ -195,6 +198,7 @@ export default function Settings() {
                     // Handle reauthentication error
                     console.log("Password not updated successfully!");
                   }
+                 
                 } else {
                   reject("Check the password again");
                 }
@@ -206,6 +210,7 @@ export default function Settings() {
               }
             }
           );
+          
         } else {
           // If no image is selected, handle only the non-image updates
           try {
@@ -276,110 +281,7 @@ export default function Settings() {
     );
   };
 
-  // const handleEdit = () => {
-  //   toast.promise(
-  //     new Promise(async (resolve, reject) => {
-
-  //       const storage = getStorage();
-  //       const storageRef = ref(storage, myuser.displayName);
-  //       // console.log(myuser.displayName)
-
-  //       const uploadTask = uploadBytesResumable(storageRef, img);
-  //       if(img){
-
-  //       }
-  //       uploadTask.on(
-  //         "state_changed",
-  //         (snapshot) => {
-  //           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //           console.log("Upload is " + progress + "% done");
-  //         },
-  //         (error) => {
-  //           console.log(error);
-  //           reject("Couldn't upload image");
-  //         },
-  //         async () => {
-  //           try {
-  //             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-  //              await updateProfile(myuser, {
-  //                 photoURL: downloadURL,
-  //               },)
-  //               setMyUser((prevUser) => ({
-  //                 ...prevUser,
-  //                 photoURL: downloadURL, // Update the photoURL in the myuser state
-  //               }));
-  //               await updateDoc(doc(db, "users", myuser.uid), {
-  //                 photoURL: downloadURL,
-  //               });
-
-  //               if(username.name){
-  //                 await updateProfile(myuser, {
-  //                   displayName: username.name,
-  //                 },)
-
-  //                 await updateDoc(doc(db, "users", myuser.uid), {
-  //                   name: username.name,
-  //                 });
-
-  //               }
-  //               if (email.myemail) {
-  //                 const user = auth.currentUser;
-  //                 try {
-  //                   await updateEmail(user, email.myemail);
-
-  //                   setMyUser((prevUser) => ({
-  //                     ...prevUser,
-  //                     email: email.myemail,
-  //                   }));
-
-  //                   await updateDoc(doc(db, "users", myuser.uid), {
-  //                     email:email.myemail,
-  //                   });
-
-  //                   // Update successful
-
-  //                 } catch (error) {
-  //                   console.error("Error reauthenticating:", error);
-  //                   // Handle reauthentication error
-  //                 }
-  //               }
-
-  //               if (Password.mypassword === confirmPassword.confirmpassword) {
-  //                 const user = auth.currentUser;
-
-  //                 try {
-  //                   await updatePassword(user, Password.mypassword);
-
-  //                   // Password updated successfully
-  //                   console.log("Password updated successfully!");
-
-  //                   // Note: You might want to handle UI updates and inform the user.
-  //                 } catch (error) {
-  //                   // Handle reauthentication error
-  //                   console.log("Password not updated successfully!");
-  //                 }
-  //               }
-  //               else{
-  //                 reject("Check the password again")
-  //               }
-
-  //             resolve("Sent");
-  //           } catch (error) {
-  //             console.log(error);
-  //             reject("Couldn't save the message. Please try again later.");
-  //           }
-  //         }
-  //       );
-  //     }),
-  //     {
-  //       loading: "Updating...",
-  //       success:"Updated",
-  //       error: (errMsg) => {
-  //         toast.error(errMsg);
-  //       },
-  //     }
-  //   );
-  // }
+ 
 
   return (
     <div className={styles1.maincont}>
@@ -453,7 +355,7 @@ export default function Settings() {
                 id="file"
                 style={{ display: "none" }}
                 onChange={(e) => {
-                  console.log("Selected file:", e.target.files[0]);
+                  // console.log("Selected file:", e.target.files[0]);
                   setImg(e.target.files[0]);
                 }}
               />
@@ -464,10 +366,7 @@ export default function Settings() {
                   width="30"
                   alt="external-circle-gradak-writing-gradak-royyan-wijaya"
                   className={styles1.pencil}
-                  onChange={(e) => {
-                    console.log("Selected file:", e.target.files[0]);
-                    setImg(e.target.files[0]);
-                  }}
+                 
                 />
               </label>
             </div>
