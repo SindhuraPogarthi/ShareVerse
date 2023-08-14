@@ -107,6 +107,8 @@
     font-family: 'Ysabeau Infant', sans-serif;    
 }
 .signinbtmsignup{
+    margin: 0 auto;
+    width: fit-content;
     display: flex;
     gap: 1rem;
     align-items: center;
