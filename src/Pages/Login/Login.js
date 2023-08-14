@@ -16,8 +16,6 @@ import { toast, Toaster } from "react-hot-toast";
 import { db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
-
-
 export default function Login() {
   const navigate = useNavigate();
 
@@ -25,6 +23,8 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [isChecked, setIsChecked] = useState(false);
+  const isCheckChangeHandler = () => setIsChecked(!isChecked);
 
   const handlelogin = () => {
     if (!values.email || !values.password) {
@@ -38,22 +38,18 @@ export default function Login() {
           const user = res.user;
           // console.log(user);
           setTimeout(() => {
-            navigate('/mainpage')
+            navigate("/mainpage");
           }, 1000);
         })
         .catch((err) => {
-            if (err.message === "Firebase: Error (auth/invalid-email).") {
-                throw new Error("Enter a valid email");
-            }
-            else if (err.message === "Firebase: Error (auth/wrong-password).") {
-                throw new Error("Enter a valid password");
-            }
+          if (err.message === "Firebase: Error (auth/invalid-email).") {
+            throw new Error("Enter a valid email");
+          } else if (err.message === "Firebase: Error (auth/wrong-password).") {
+            throw new Error("Enter a valid password");
+          }
 
           throw new Error(err);
         }),
-
-
-        
 
       {
         loading: "Saving...",
@@ -70,7 +66,7 @@ export default function Login() {
           const credential = GoogleAuthProvider.credentialFromResult(result);
           const token = credential.accessToken;
           const user = result.user;
-          if(user){
+          if (user) {
             navigate("/mainpage");
           }
           console.log(user);
@@ -98,9 +94,8 @@ export default function Login() {
         loading: "Saving...",
         success: <b>Successfully Signed up!</b>,
         error: (err) => <b>{err}</b>,
-       }
+      }
     );
-    
   };
   return (
     <div className={styles.container}>
@@ -126,8 +121,12 @@ export default function Login() {
           ></input>
           <img src={lock} alt="username"></img>
         </div>
-        <div className={styles.additionalline}>
-          <input type="checkbox" className={styles.checkbox}></input>
+        <div className={styles.additionalline} onClick={isCheckChangeHandler}>
+          <input
+            type="checkbox"
+            checked={isChecked}
+            className={styles.checkbox}
+          ></input>
           <span>Remember me</span>
         </div>
         <motion.button
@@ -141,11 +140,9 @@ export default function Login() {
           <img src={google} alt="google"></img>
           <span>Login in with google</span>
         </div>
-        <div className={styles.signinbtmsignup}>
+        <div className={styles.signinbtmsignup} onClick={() => navigate("/")}>
           <span>Already have an account?</span>
-          <span onClick={() => navigate("/")} className={styles.signupbtm}>
-            Sign Up
-          </span>
+          <span className={styles.signupbtm}>Sign Up</span>
         </div>
       </div>
       <Toaster />

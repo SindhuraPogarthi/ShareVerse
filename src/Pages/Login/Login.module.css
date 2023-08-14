@@ -99,8 +99,9 @@
 }
 .signinbtmsignup{
     display: flex;
-    justify-content: space-between;
+    gap: 1rem;
     align-items: center;
+    cursor: pointer;
 }
 .signinbtmsignup .signupbtm{
     cursor: pointer;
@@ -117,6 +118,14 @@
     gap: 20px;
     cursor: pointer;
     
+}
+
+
+.additionalline{
+    display: flex;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
 }
 @media (max-width:400px){
     .signinouter{

@@ -108,8 +108,9 @@
 }
 .signinbtmsignup{
     display: flex;
-    justify-content: space-between;
+    gap: 1rem;
     align-items: center;
+    cursor: pointer;
 }
 .signinemail input{
     width: 90%;
@@ -147,7 +148,13 @@
     
 }
 
-
+.additionalline {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
 
 
 

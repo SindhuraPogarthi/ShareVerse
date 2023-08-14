@@ -18,12 +18,13 @@ import { db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
 export default function Login() {
-  
   const [values, setValues] = useState({
     name: "",
     email: "",
     password: "",
   });
+  const [isChecked, setIsChecked] = useState(false);
+  const isCheckChangeHandler = () => setIsChecked(!isChecked);
   const navigate = useNavigate();
 
   const handlesignup = () => {
@@ -37,29 +38,27 @@ export default function Login() {
       createUserWithEmailAndPassword(auth, values.email, values.password)
         .then((res) => {
           const user = res.user;
-         
+
           console.log(user);
 
           // Update user profile
           return updateProfile(user, {
             displayName: values.name,
-            
           })
             .then(() => {
               // Save user data to Firestore
               return setDoc(doc(db, "users", user.uid), {
-                uid:user.uid,
+                uid: user.uid,
                 name: values.name,
                 email: values.email,
-                photoURL:user.photoURL,
-                password:values.password
-                
+                photoURL: user.photoURL,
+                password: values.password,
               });
             })
-            .then(()=>{
-              return setDoc(doc(db, "userchats", user.uid),{})
+            .then(() => {
+              return setDoc(doc(db, "userchats", user.uid), {});
             })
-            
+
             .then(() => {
               // After everything is successful, navigate to login and show success toast
               setTimeout(() => {
@@ -84,12 +83,11 @@ export default function Login() {
             throw new Error("An error occured");
           }
         }),
-        {
-          loading: 'Saving...',
-          success: <b>Successfully Signed up!</b>,
-          error: (err) => <b>{err.message}</b>,
-          
-        }
+      {
+        loading: "Saving...",
+        success: <b>Successfully Signed up!</b>,
+        error: (err) => <b>{err.message}</b>,
+      }
     );
   };
 
@@ -114,9 +112,8 @@ export default function Login() {
             // Create an empty document for user chats in the "userchats" collection
             return setDoc(doc(db, "userchats", user.uid), {});
           });
-      
         })
-       
+
         .catch((error) => {
           // Handle Errors here.
           const errorCode = error.code;
@@ -168,8 +165,12 @@ export default function Login() {
           ></input>
           <img src={lock} alt="username"></img>
         </div>
-        <div className={styles.additionalline}>
-          <input type="checkbox" className={styles.checkbox}></input>
+        <div className={styles.additionalline} onClick={isCheckChangeHandler}>
+          <input
+            type="checkbox"
+            checked={isChecked}
+            className={styles.checkbox}
+          ></input>
           <span>Remember me</span>
         </div>
         <motion.button
@@ -183,11 +184,12 @@ export default function Login() {
           <img src={google} alt="google"></img>
           <span>Login in with google</span>
         </div>
-        <div className={styles.signinbtmsignup}>
-          <span>Already have an account?</span>
-          <span onClick={() => navigate("/login")} className={styles.signupbtm}>
-            Login
-          </span>
+        <div
+          className={styles.signinbtmsignup}
+          onClick={() => navigate("/login")}
+        >
+          <span>Do not have an account yet?</span>
+          <span className={styles.signupbtm}>Login</span>
         </div>
       </div>
       <Toaster />
