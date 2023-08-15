@@ -188,7 +188,7 @@ export default function Login() {
           className={styles.signinbtmsignup}
           onClick={() => navigate("/login")}
         >
-          <span>Do not have an account yet?</span>
+          <span>Already have an account?</span>
           <span className={styles.signupbtm}>Login</span>
         </div>
       </div>

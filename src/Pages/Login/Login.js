@@ -141,7 +141,7 @@ export default function Login() {
           <span>Login in with google</span>
         </div>
         <div className={styles.signinbtmsignup} onClick={() => navigate("/")}>
-          <span>Already have an account?</span>
+          <span>Do not have an account yet?</span>
           <span className={styles.signupbtm}>Sign Up</span>
         </div>
       </div>
