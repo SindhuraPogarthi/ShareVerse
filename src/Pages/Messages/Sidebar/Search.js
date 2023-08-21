@@ -25,9 +25,16 @@ export default function Search() {
   const {dispatch}=useContext(ChatContext)
 
 
+  // const resetUserData = (dispatch) => {
+  //   dispatch({ type: "CHANGE_USER", payload: null });
+  // };
+
   useEffect(() => {
     const unsubscribe = listenForUsers();
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+    }
+
   }, []);
 
   const handlechange = (e) => {
