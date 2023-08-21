@@ -38,7 +38,9 @@ export default function Login() {
           const user = res.user;
           // console.log(user);
           setTimeout(() => {
-            navigate('/mainpage')
+            if(user){
+              navigate('/mainpage')
+            }
           }, 1000);
         })
         .catch((err) => {
@@ -142,7 +144,7 @@ export default function Login() {
           <span>Login in with google</span>
         </div>
         <div className={styles.signinbtmsignup}>
-          <span>Already have an account?</span>
+          <span>Don't have an account yet?</span>
           <span onClick={() => navigate("/")} className={styles.signupbtm}>
             Sign Up
           </span>
