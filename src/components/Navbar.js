@@ -4,7 +4,9 @@ import heart from '../Assets/images/heart.gif'
 import { useNavigate } from 'react-router-dom'
 
 
-export default function Navbar() {
+export default function Navbar({toggleCreate}) {
+    // const [isCreateVisible, setIsCreateVisible] = useState(false);
+
     const navigate=useNavigate()
     const handlehome=()=>{
         
@@ -19,7 +21,8 @@ export default function Navbar() {
 
     }
     const handlecreate=()=>{
-
+        // setIsCreateVisible(true); // Show the additional div
+        toggleCreate();
     }
     const handlesettings=()=>{
         navigate('/settings')
@@ -66,6 +69,7 @@ export default function Navbar() {
                 
             </div>
         </nav>
+        
     </div>
   )
 }

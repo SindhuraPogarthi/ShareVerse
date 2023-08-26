@@ -13,6 +13,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 
 export default function Mainpage() {
   const navigate=useNavigate();
+  const [isCreateVisible, setIsCreateVisible] = useState(false);
 
 
   // const handlesignout=()=>{
@@ -45,10 +46,8 @@ export default function Mainpage() {
     <div>
       {user?(
         <div style={{display:"flex",justifyContent:"space-between"}}>
-             {/* <h1>Welcome {props.user}</h1> */}
-            {/* <button onClick={handlesignout}>Sign Out</button> */} 
-            <Navbar/>
-            <Demo/>
+            <Navbar toggleCreate={()=>setIsCreateVisible(!isCreateVisible)}/>
+            <Demo isCreateVisible={isCreateVisible}/>
             <Friends user={user}/>
         </div>
       ):(

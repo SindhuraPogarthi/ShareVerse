@@ -69,6 +69,10 @@
     font-size:17px;
     
 }
+.people button:active{
+
+    color: red;
+}
 .people li div{
     display: flex;
     align-items: center;

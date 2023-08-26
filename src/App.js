@@ -5,6 +5,7 @@ import Login from './Pages/Login/Login'
 import Mainpage from './components/Mainpage'
 import Msg from './Pages/Messages/Msg'
 import Settings from './Pages/Settings/Settings'
+import Create from './Pages/Create/Create'
 
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
             <Route path='/mainpage' element={<Mainpage/>}/>
             <Route path='/messages' element={<Msg/>}/>
             <Route path='/settings' element={<Settings />}/>
+            <Route path='/create' element={<Create/>}/>
           </Routes>
           {/* <Routes>
             <Route path='/' element={<Mainpage/>}  />

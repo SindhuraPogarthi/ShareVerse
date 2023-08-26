@@ -7,12 +7,15 @@
 }
 
 .searchform input{
+    border: solid 1px black;
     outline: none;
-    height: 25px;
-    width: 98%;
-    margin-top: 20px;
+    width: 95%;
+    margin: 20px 0;
     font-family: 'Ysabeau Infant', sans-serif; 
-   font-size: large;
+    font-size: large;
+    height: 35px;
+    border-radius: 10px;
+    padding-left: 20px;
 }
 .userchat img{
     width: 50px;

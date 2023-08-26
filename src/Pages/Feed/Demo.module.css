@@ -7,8 +7,63 @@
     overflow: scroll;
     font-family: 'Ysabeau Infant', sans-serif;
     font-weight: 400;
-   font-size: larger;
+    font-size: larger;
+    padding: 0 30px;
+  
 }
 .cont::-webkit-scrollbar{
     display: none;
+}
+.postinput img{
+    height: 50px;  
+    width: 50px;
+    border-radius: 50%; 
+}
+.postinput{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 10px;
+    
+}
+.postinput input{
+    font-family: 'Ysabeau Infant', sans-serif;
+    font-weight:500;
+    font-size: large;
+    flex: 1;
+    height: 40px;
+    border: solid 1px black;
+    border-radius: 10px;
+    padding-left: 20px;
+    background-color: rgb(241, 241, 216);
+}
+
+.postinput input:focus{
+    outline: none;
+}
+.postinput ::placeholder{
+    font-family: 'Ysabeau Infant', sans-serif;
+    font-weight:700;
+}
+.postinput button{
+    font-family: 'Ysabeau Infant', sans-serif;
+    font-weight:500;
+    font-size: large;
+    background-color: rgb(160, 181, 229);
+    border: solid 1px black;
+    border-radius: 5px;
+   
+}
+.postings{
+    padding: 0 10px;
+}
+.postings img{
+    height: 50px;  
+    width: 50px;
+    border-radius: 50%; 
+}
+.mainposts{
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
