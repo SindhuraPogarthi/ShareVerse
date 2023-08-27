@@ -4,7 +4,7 @@ import heart from '../Assets/images/heart.gif'
 import { useNavigate } from 'react-router-dom'
 
 
-export default function Navbar() {
+export default function Sideicons() {
     const navigate=useNavigate()
     const handlehome=()=>{
         navigate('/mainpage')
@@ -19,6 +19,7 @@ export default function Navbar() {
 
     }
     const handlecreate=()=>{
+        navigate('/mainpage')
 
     }
     const handlesettings=()=>{

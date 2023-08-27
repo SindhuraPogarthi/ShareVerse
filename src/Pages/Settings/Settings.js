@@ -64,7 +64,9 @@ export default function Settings() {
     navigate("/messages");
   };
   const handlenotifi = () => {};
-  const handlecreate = () => {};
+  const handlecreate = () => {
+    navigate('/mainpage')
+  };
   const handlesettings = () => {
     navigate("/settings");
   };

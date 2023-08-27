@@ -107,8 +107,13 @@ export default function Demo({isCreateVisible}) {
           <h2>Posts:</h2>
           {userData.map((user) => (
             <div key={user.id} className={styles.mainposts}>
-              <img src={user.uid===auth.currentUser.uid?auth.currentUser.photoURL:user.photo} alt="myimg" />
-              <p>{user.note}</p>
+              <div className={styles.userdetails}>
+                <img src={user.uid===auth.currentUser.uid?auth.currentUser.photoURL:user.photo} alt="myimg" />
+                <span>{user.uid===auth.currentUser.uid?auth.currentUser.displayName:user.name}</span>
+              </div>
+              <div className={styles.posts}>
+                  <p>{user.note}</p>
+              </div>
             </div>
           ))}
         </div>
