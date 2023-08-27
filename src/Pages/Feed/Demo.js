@@ -24,6 +24,14 @@ export default function Demo({isCreateVisible}) {
  
     setNote("")
   };
+
+  const handlepress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handlechange();
+    
+    }
+  };
   
 
   useEffect(() => {
@@ -84,6 +92,7 @@ export default function Demo({isCreateVisible}) {
                       setNote(e.target.value);
                     }}
                     placeholder="Start a post"
+                    onKeyDown={handlepress}
                 />
                 <img src="https://img.icons8.com/dusk/64/add-image.png" alt="myimage"/>
                 <button  onClick={handlechange}>Post</button>
