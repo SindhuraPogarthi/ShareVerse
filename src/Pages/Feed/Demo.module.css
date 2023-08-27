@@ -80,5 +80,8 @@
     padding: 10px 0 0 10px;
 }
 .posts{
-    margin-left: 20px;
+    margin-left: 10px;
+}
+.posts p{
+    margin: 10px ;
 }
