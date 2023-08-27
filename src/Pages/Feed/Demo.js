@@ -39,10 +39,10 @@ export default function Demo({isCreateVisible}) {
           ...user,
         }));
         setUserData(usersArray);
-        console.log("-------")
-        console.log(userData[0].uid)
-        console.log(auth.currentUser.uid)
-        console.log(userData[0].photo)
+        // console.log("-------")
+        // console.log(userData[0].uid)
+        // console.log(auth.currentUser.uid)
+        // console.log(userData[0].photo)
       }
     });
 
@@ -85,7 +85,7 @@ export default function Demo({isCreateVisible}) {
                     }}
                     placeholder="Start a post"
                 />
-                <img src="https://img.icons8.com/dusk/64/add-image.png" alt="add-image"/>
+                <img src="https://img.icons8.com/dusk/64/add-image.png" alt="myimage"/>
                 <button  onClick={handlechange}>Post</button>
             </div>
             
@@ -98,7 +98,7 @@ export default function Demo({isCreateVisible}) {
           <h2>Posts:</h2>
           {userData.map((user) => (
             <div key={user.id} className={styles.mainposts}>
-              <img src={user.uid==auth.currentUser.uid?auth.currentUser.photoURL:user.photo} ></img>
+              <img src={user.uid===auth.currentUser.uid?auth.currentUser.photoURL:user.photo} alt="myimg" />
               <p>{user.note}</p>
             </div>
           ))}
