@@ -16,6 +16,9 @@ export default function Demo({isCreateVisible}) {
     set(newUserRef, {
     
       note: note,
+      uid:auth.currentUser.uid,
+      name:auth.currentUser.displayName,
+      photo:auth.currentUser.photoURL,
     });
 
  
@@ -36,6 +39,10 @@ export default function Demo({isCreateVisible}) {
           ...user,
         }));
         setUserData(usersArray);
+        console.log("-------")
+        console.log(userData[0].uid)
+        console.log(auth.currentUser.uid)
+        console.log(userData[0].photo)
       }
     });
 
@@ -91,7 +98,7 @@ export default function Demo({isCreateVisible}) {
           <h2>Posts:</h2>
           {userData.map((user) => (
             <div key={user.id} className={styles.mainposts}>
-              <img src={auth.currentUser.photoURL} ></img>
+              <img src={user.uid==auth.currentUser.uid?auth.currentUser.photoURL:user.photo} ></img>
               <p>{user.note}</p>
             </div>
           ))}
