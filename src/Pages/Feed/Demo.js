@@ -46,7 +46,7 @@ export default function Demo({isCreateVisible}) {
           id,
           ...user,
         }));
-        setUserData(usersArray);
+        setUserData(usersArray.reverse());
         // console.log("-------")
         // console.log(userData[0].uid)
         // console.log(auth.currentUser.uid)
