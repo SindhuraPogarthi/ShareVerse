@@ -77,3 +77,13 @@
     display: flex;
     align-items: center;
 }
+.logout{
+    border-radius: 5px;
+   border: solid 1px black;
+    font-family: 'Ysabeau Infant', sans-serif;
+    font-weight: 400;
+    font-size: medium;
+    padding: 3px 5px;
+    background-color: rgb(239,239,239);
+    margin-left: 50px;
+}

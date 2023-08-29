@@ -2,6 +2,9 @@ import React, { useEffect,useState } from "react";
 import styles from "./Friends.module.css";
 import { auth, db } from "../firebase";
 import { collection,where,orderBy,query,onSnapshot } from "firebase/firestore";
+import { signOut } from 'firebase/auth';
+import { Navigate, useNavigate } from 'react-router-dom';
+
 
 export default function Friends() {
   const user = auth.currentUser;
@@ -11,6 +14,13 @@ export default function Friends() {
 
   const userUrl = "https://img.icons8.com/ios-filled/50/user-male-circle.png";
 
+  
+//   const handlelogout=()=>{
+//     signOut(auth).then(()=>{
+//         Navigate('/login')
+//     })
+
+// }
   useEffect(() => {
     const unsubscribe = listenForUsers();
    
@@ -41,6 +51,9 @@ export default function Friends() {
           className={styles.images}
         ></img>
         <span style={{ marginLeft: "10px" }}>{displayName}</span>
+        {/* <button className={styles.logout} onClick={handlelogout}>
+                Log out
+            </button> */}
       </div>
       <div className={styles.addpeople}>
       <header> Suggested for you</header>

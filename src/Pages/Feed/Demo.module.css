@@ -57,7 +57,7 @@
 .postings{
     padding: 0 10px;
 }
-.postings img{
+.userdetails img{
     height: 50px;  
     width: 50px;
     border-radius: 50%; 
@@ -84,4 +84,14 @@
 }
 .posts p{
     margin: 10px ;
+}
+.postingimg{
+    width: 300px;
+}
+.posts img{
+    width: 70%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+ 
 }
