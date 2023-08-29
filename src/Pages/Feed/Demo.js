@@ -176,7 +176,7 @@ export default function Demo({ isCreateVisible }) {
             <label htmlFor="file">
               <img
                 style={{height:"40px",width:"40px",paddingTop:"5px"}}
-                src="https://img.icons8.com/fluency-systems-filled/48/image-gallery.png"
+                src="https://img.icons8.com/color/48/image-gallery.png"
                 alt="add-file"
               />
             </label>
