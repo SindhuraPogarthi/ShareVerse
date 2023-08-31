@@ -1,14 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@400;700&display=swap');
-
+header{
+    display: none;
+}
 .cont{
+    transition: all 1s ease;
+    position: absolute;
+    right: 0;
     height: 100vh;
-    width: 350px;
+    width: 25px;
+    /* width: max-content!important; */
+    /* overflow: hidden; */
+    overflow: hidden;
     background-color: rgb(221, 235, 247);
     padding: 0px 50px 0 20px;
     font-family: 'Ysabeau Infant', sans-serif;
     font-weight: 400;
     font-size: larger;
   
+}
+.cont.active{
+    overflow: visible;
+    width: max-content;
 }
 .images{
     height: 50px;  
@@ -86,4 +98,12 @@
     padding: 3px 5px;
     background-color: rgb(239,239,239);
     margin-left: 50px;
+}
+
+
+@media screen and (min-width:600px) {
+
+    header{
+        display: block;
+    }
 }
