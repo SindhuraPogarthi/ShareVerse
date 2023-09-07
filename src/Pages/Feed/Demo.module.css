@@ -2,13 +2,13 @@
 
 .cont{
     flex-grow: 1;
-    border: solid 2px black;
-    height: 100vh;
+    border-left: solid 2px black;
+    max-height: 100vh;
     overflow: scroll;
     font-family: 'Ysabeau Infant', sans-serif;
     font-weight: 400;
     font-size: larger;
-    padding: 0 30px;
+    padding: 0;
   
 }
 .cont::-webkit-scrollbar{
@@ -50,7 +50,7 @@
     font-weight:500;
     font-size: large;
     background-color: rgb(160, 181, 229);
-    border: solid 1px black;
+    /* border: solid 1px black; */
     border-radius: 5px;
    
 }
@@ -94,4 +94,11 @@
     margin-bottom: 20px;
     margin-left: 10px;
  
+}
+
+
+@media screen and (min-width:600px) {
+    .cont{
+        padding: 0 30px;
+    }
 }
