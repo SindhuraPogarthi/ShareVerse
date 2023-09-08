@@ -121,7 +121,7 @@
 @media screen and (max-width:390px) {
     .cont{
         padding-left: 0;
-        font-size: medium;
+         font-size: medium;
     }
     .postinput img{
         display: none;
