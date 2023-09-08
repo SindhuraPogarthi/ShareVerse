@@ -12,7 +12,7 @@ header{
     /* overflow: hidden; */
     overflow: hidden;
     background-color: rgb(221, 235, 247);
-    padding: 0px 50px 0 20px;
+    padding: 0px 50px 0 0px;
     font-family: 'Ysabeau Infant', sans-serif;
     font-weight: 400;
     font-size: larger;
@@ -106,4 +106,18 @@ header{
     header{
         display: block;
     }
+}
+@media screen and (max-width:600px) {
+    .cont{
+        width: 5%;
+    }
+}
+@media screen and (max-width:390px) {
+    .cont{
+        width: 5%;
+    }
+    .cont.active{
+        width: 75%;
+    }
+    
 }

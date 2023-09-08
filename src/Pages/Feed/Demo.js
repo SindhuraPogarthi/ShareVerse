@@ -10,7 +10,7 @@ import { Toaster, toast } from "react-hot-toast";
 
 
 export default function Demo({ isCreateVisible }) {
-  console.log(isCreateVisible)
+  // console.log(isCreateVisible)
   const [note, setNote] = useState("");
   const [userData, setUserData] = useState([]);
   const [img, setImg] = useState(null);
@@ -118,23 +118,19 @@ export default function Demo({ isCreateVisible }) {
         // console.log(auth.currentUser.uid)
         // console.log(userData[0].photo)
       }
-      if (isCreateVisible) {
-        // Scroll to the top of the page
-        window.scrollTo(0, 0);
-       
-      }
+      
     });
 
     // Clean up the event listener when the component is unmounted
     return () => {
       off(usersRef);
     };
-  }, [isCreateVisible]);
+  });
 
   return (
     <div className={styles.cont}>
       {isCreateVisible && (
-        <div>
+        <div className={styles.mycreate}>
           {/* <input
               type="text"
               value={name}
@@ -152,7 +148,7 @@ export default function Demo({ isCreateVisible }) {
             />
             <br />
             <button onClick={handlechange}>Save details</button>
-            <hr></hr> */}
+          <hr></hr> */}
           <div className={styles.postinput}>
             <img src={auth.currentUser.photoURL}></img>
             <input
@@ -180,7 +176,6 @@ export default function Demo({ isCreateVisible }) {
                 alt="add-file"
               />
             </label>
-            {/* <img src="https://img.icons8.com/dusk/64/add-image.png" alt="myimage"/> */}
             <button onClick={handlechange}>Post</button>
           </div>
         </div>
